@@ -48,7 +48,6 @@ class DocumentList extends React.Component { // eslint-disable-line react/prefer
     const state = this.state;
     return API.get('filesCRUD', '/files')
       .then((files) => {
-        console.log(files);
         state.files = files;
         return files;
         /* const stamperyFiles = files.filter((file) => file.stamperyId);
@@ -98,14 +97,16 @@ class DocumentList extends React.Component { // eslint-disable-line react/prefer
     }, {
       Header: 'Actions',
       accessor: 'fileId',
-      Cell: (props) => <span>
-        <button onClick={() => this.deletePrivateDocument(props.value)}>
-          Delete
-        </button>
-        <button onClick={() => this.downloadPrivateDocument(props.value)}>
-          Download
-        </button>
-      </span>,
+      Cell: (props) => (
+        <span>
+          <button onClick={() => this.deletePrivateDocument(props.value)}>
+            Delete
+          </button>
+          <button onClick={() => this.downloadPrivateDocument(props.value)}>
+            Download
+          </button>
+        </span>
+      ),
     }];
 
     if (error) {

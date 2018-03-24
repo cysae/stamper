@@ -15,6 +15,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import DocumentList from 'components/DocumentList/Loadable';
 import DocumentStamper from 'components/DocumentStamper/index';
+import DocumentVerifier from 'components/DocumentVerifier/index';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import BurgerMenu from 'components/BurgerMenu/index';
 
@@ -25,6 +26,7 @@ export default function App() {
       <Switch>
         <Route exact path="/" component={DocumentList} />
         <Route exact path="/stamp" component={DocumentStamper} />
+        <Route exact path="/verify" component={DocumentVerifier} />
         <Route component={NotFoundPage} />
       </Switch>
     </div>

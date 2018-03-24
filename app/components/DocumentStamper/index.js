@@ -36,28 +36,24 @@ class DocumentStamper extends React.Component { // eslint-disable-line react/pre
 
     this.onDrop = this.onDrop.bind(this);
     this.stampFile = this.stampFile.bind(this);
+    this.stampUploadAndSaveFile = this.stampUploadAndSaveFile.bind(this);
   }
 
   onDrop(files) {
     this.setState({ isLoading: true });
 
-    const file = files[0];
-    file.uuid = uuidv4();
-    this.stampFile(file)
-      .then((stamp) => {
-        file.stamperyId = stamp.id;
-        file.hash = stamp.hash;
-        file.stampedOn = stamp.time;
-        return this.uploadFileToS3(file);
-      })
-      .then(() => this.saveFileToDynamoDB(file))
-      .then(() => {
+    const promises = files.map((file) => this.stampUploadAndSaveFile(file));
+
+    Promise.all(promises)
+      .then((droppedFiles) => {
         this.setState({
           isLoading: false,
-          files: [file],
+          files: droppedFiles,
         });
       })
-      .catch(() => this.setState({ hasError: true }));
+      .catch((err) => {
+        this.setState({ hasError: true })
+      });
   }
 
   getBufferFromBlobUrl(url) {
@@ -76,6 +72,15 @@ class DocumentStamper extends React.Component { // eslint-disable-line react/pre
     });
   }
 
+  stampUploadAndSaveFile(file) {
+    const droppedFile = file;
+    droppedFile.uuid = uuidv4();
+    return this.stampFile(file)
+      .then((stampedFile) => this.uploadFileToS3(stampedFile))
+      .then(() => this.saveFileToDynamoDB(droppedFile))
+      .then(() => droppedFile);
+  }
+
   saveFileToDynamoDB(file) {
     const newFile = {
       name: file.name,
@@ -88,10 +93,33 @@ class DocumentStamper extends React.Component { // eslint-disable-line react/pre
   }
 
   stampFile(file) {
+    const droppedFile = file;
     return this.getBufferFromBlobUrl(file.preview).then((buffer) => {
-      const hash = stampery.hash(buffer);
-      return stampery.stamp(hash);
-    });
+      droppedFile.binaryHash = stampery.hash(buffer);
+      return stampery.stamp(droppedFile.binaryHash);
+    })
+      .then((stamp) => {
+        droppedFile.stamperyid = stamp.id;
+        droppedFile.hash = stamp.hash;
+        droppedFile.stampedon = stamp.time;
+        return droppedFile;
+      })
+      .catch((err) => {
+        if (err.statusCode === 409) {
+          return stampery.getByHash(droppedFile.binaryHash)
+            .then((stampList) => {
+              const stamp = stampList[0];
+              droppedFile.stamperyid = stamp.id;
+              droppedFile.hash = stamp.hash;
+              droppedFile.stampedon = stamp.time;
+              console.log(droppedFile);
+              this.uploadFileToS3(droppedFile);
+            })
+            .then(() => this.saveFileToDynamoDB(droppedFile))
+            .then(() => droppedFile);
+        }
+        throw err;
+      });
   }
 
   uploadFileToS3(file) {

@@ -31,7 +31,7 @@ const styles = {
     background: '#bdc3c7',
   },
   bmMenu: {
-    background: '#373a47',
+    background: 'white',
     padding: '2.5em 1.5em 0',
     fontSize: '1.15em',
   },
@@ -65,6 +65,7 @@ class BurgerMenu extends React.Component { // eslint-disable-line react/prefer-s
       <Menu isOpen={isMenuOpen} styles={styles}>
         <Link to="/" onClick={this.closeMenu}>My Documents</Link>
         <Link to="/stamp" onClick={this.closeMenu}>Stamper</Link>
+        <Link to="/verify" onClick={this.closeMenu}>Verifier</Link>
       </Menu>
     );
   }
