@@ -5,16 +5,24 @@ import React from 'react';
 *
 */
 
-// import styled from 'styled-components';
+import styled from 'styled-components';
 import { Layout } from 'antd';
 import Navigation from '../Navigation/index';
-import Logo from '../../images/icon-180x180.png';
+import LogoImg from '../../images/icon-180x180.png';
 const { Header, Content, Footer, Sider } = Layout;
+
+const Logo = styled.img`
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 95%;
+  padding: 10px;
+`;
 
 const layoutHOC = (WrappedComponent) => (props) => (
   <Layout>
     <Sider style={{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0 }}>
-      <img className="logo" src={Logo} alt="Stamper Logo" />
+      <Logo src={LogoImg} alt="Stamper Logo" />
       <Navigation />
     </Sider>
     <Layout style={{ marginLeft: 200 }}>
