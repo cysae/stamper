@@ -116,7 +116,7 @@ class DocumentList extends React.Component { // eslint-disable-line react/prefer
 
     return (
       <div>
-        <Table columns={columns} dataSource={files} />
+        <Table columns={columns} dataSource={files} rowKey="fileId" />
         {/* <ReactTable className="-striped" data={files} columns={columns} /> */}
       </div>
     );
