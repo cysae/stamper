@@ -98,4 +98,4 @@ VerifyDocument.propTypes = {
 
 };
 
-export default withAuthenticator(VerifyDocument, { withGreeting: true });
+export default withAuthenticator(VerifyDocument);

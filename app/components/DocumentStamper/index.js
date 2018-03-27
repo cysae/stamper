@@ -154,4 +154,4 @@ DocumentStamper.propTypes = {
 
 };
 
-export default withAuthenticator(DocumentStamper, { withGreeting: true });
+export default withAuthenticator(DocumentStamper);
