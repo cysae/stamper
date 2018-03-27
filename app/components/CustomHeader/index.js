@@ -5,11 +5,21 @@ import React from 'react';
 *
 */
 
-// import styled from 'styled-components';
-
+import styled from 'styled-components';
 import { Auth } from 'aws-amplify';
 import { Layout, Button } from 'antd';
 const { Header } = Layout;
+
+const Right = styled.div`
+  position: absolute;
+  right: 16px;
+`;
+
+const Greeting = styled.p`
+  margin-right: 20px;
+  display: inline;
+  font-size: 16px;
+`;
 
 class CustomHeader extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -40,7 +50,7 @@ class CustomHeader extends React.Component { // eslint-disable-line react/prefer
     this.setState({ isLogoutLoading: true });
     Auth.signOut()
       .then(() => this.setState({ isLogoutLoading: false }))
-      .catch((err) => console.error(err)); 
+      .catch((err) => console.error(err));
   }
 
   render() {
@@ -48,10 +58,12 @@ class CustomHeader extends React.Component { // eslint-disable-line react/prefer
 
     return (
       <Header style={{ background: '#fff', padding: 0 }}>
-        Hello {username}
-        <Button type="primary" icon="poweroff" loading={this.isLogoutLoading} onClick={this.signOut}>
-          Sign Out
-        </Button>
+        <Right>
+          <Greeting>Hola, {username}</Greeting>
+          <Button type="primary" icon="poweroff" loading={this.isLogoutLoading} onClick={this.signOut}>
+            Sign Out
+          </Button>
+        </Right>
       </Header>
     );
   }
