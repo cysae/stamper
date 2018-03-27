@@ -124,7 +124,6 @@ class DocumentList extends React.Component { // eslint-disable-line react/prefer
 }
 
 DocumentList.propTypes = {
-
 };
 
 export default withAuthenticator(DocumentList);
