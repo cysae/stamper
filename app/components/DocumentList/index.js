@@ -127,4 +127,4 @@ DocumentList.propTypes = {
 
 };
 
-export default withAuthenticator(DocumentList, { withGreetings: true });
+export default withAuthenticator(DocumentList);

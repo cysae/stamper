@@ -39,7 +39,7 @@ class Navigation extends React.PureComponent { // eslint-disable-line react/pref
 }
 
 Navigation.propTypes = {
-  location: PropTypes.string,
+  location: PropTypes.object,
 };
 
 export default withRouter(Navigation);
