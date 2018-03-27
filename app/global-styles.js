@@ -1,5 +1,8 @@
 import { injectGlobal } from 'styled-components';
 
+// Ant Design
+import 'antd/dist/antd.css';
+
 /* eslint no-unused-expressions: 0 */
 injectGlobal`
   html,
@@ -26,5 +29,13 @@ injectGlobal`
   label {
     font-family: Georgia, Times, 'Times New Roman', serif;
     line-height: 1.5em;
+  }
+
+  .logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 95%;
+    padding: 10px;
   }
 `;

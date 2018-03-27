@@ -5,35 +5,35 @@ features:
       filesCRUD: !com.amazonaws.mobilehub.v0.API 
         attributes:
           name: filesCRUD
-          requires-signin: true
+          requires-signin: false
           sdk-generation-stage-name: Development
         paths:
           /files: !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/files-20180324181743.zip
+            codeFilename: uploads/files-20180327142338.zip
             description: 'Handler for calls to resource path : /files/{proxy+}'
             enableCORS: true
             environment: {}
             handler: lambda.handler
-            hashcode: N9UuCc4e0A2kDRY4I3ocYKsgidnFPh8R6q4Fy8fhdBE=
+            hashcode: pvmX0VtWGuQnqJcEsqkp3UZJmqzlcHHljnMjwsNwN3Q=
             memorySize: '128'
-            modified: '2018-03-24T17:18:10.814+0000'
+            modified: '2018-03-27T12:24:04.827+0000'
             name: files
             runtime: nodejs6.10
             timeout: '3'
-            version: V2P2o.Yu1Zty7gXsy31skQzrBP8AA7eB
+            version: Fw1FkotPNeZDy37nx1H.2X5kO6pXPbOs
           '/files/{proxy+}': !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/files-20180324181743.zip
+            codeFilename: uploads/files-20180327142338.zip
             description: 'Handler for calls to resource path : /files/{proxy+}'
             enableCORS: true
             environment: {}
             handler: lambda.handler
-            hashcode: N9UuCc4e0A2kDRY4I3ocYKsgidnFPh8R6q4Fy8fhdBE=
+            hashcode: pvmX0VtWGuQnqJcEsqkp3UZJmqzlcHHljnMjwsNwN3Q=
             memorySize: '128'
-            modified: '2018-03-24T17:18:10.814+0000'
+            modified: '2018-03-27T12:24:04.827+0000'
             name: files
             runtime: nodejs6.10
             timeout: '3'
-            version: zyt8Fr_l9bU6f0oCPMwfGJiLfvJgB9uP
+            version: yoX4XJlt1UlTrh1zJj5ysjp4JMFzYAHt
   content-delivery: !com.amazonaws.mobilehub.v0.ContentDelivery 
     attributes:
       enabled: true
@@ -64,21 +64,20 @@ features:
   sign-in: !com.amazonaws.mobilehub.v0.SignIn 
     attributes:
       enabled: true
-      optional-sign-in: true
+      optional-sign-in: false
     components:
       sign-in-user-pools: !com.amazonaws.mobilehub.v0.UserPoolsIdentityProvider 
         attributes:
           alias-attributes:
             - email
-            - phone_number
-          mfa-configuration: ON
+          mfa-configuration: OFF
           name: userpool
           password-policy: !com.amazonaws.mobilehub.ConvertibleMap 
-            min-length: '8'
-            require-lower-case: true
-            require-numbers: true
-            require-symbols: true
-            require-upper-case: true
+            min-length: '6'
+            require-lower-case: false
+            require-numbers: false
+            require-symbols: false
+            require-upper-case: false
   user-files: !com.amazonaws.mobilehub.v0.UserFiles 
     attributes:
       enabled: true

@@ -212,6 +212,7 @@
     "testRegex": "tests/.*\\.test\\.js$"
   },
   "dependencies": {
+    "antd": "^3.3.3",
     "aws-amplify": "^0.2.12",
     "aws-amplify-react": "^0.1.36",
     "axios": "^0.18.0",

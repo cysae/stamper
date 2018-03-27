@@ -61,6 +61,7 @@ class VerifyDocument extends React.Component { // eslint-disable-line react/pref
     return stampery.getByHash(hash)
       .then((stampList) => {
         const stamp = stampList[0];
+        console.log(stamp);
         const isVerified = (stamp === undefined) ? false : stampery.prove(stamp.receipts);
         return isVerified;
       });
@@ -77,7 +78,6 @@ class VerifyDocument extends React.Component { // eslint-disable-line react/pref
         return <h1>Verified</h1>;
       }
       if (!isVerified) {
-        console.log("out", isVerified);
         return <h1>Falsified</h1>;
       }
     }

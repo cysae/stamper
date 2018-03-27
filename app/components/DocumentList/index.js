@@ -7,17 +7,15 @@ import React from 'react';
 
 // import styled from 'styled-components';
 import ReactTable from 'react-table';
+import { Table, Icon, Divider } from 'antd';
 import Amplify, { Storage, API } from 'aws-amplify';
 import { withAuthenticator } from 'aws-amplify-react';
-import Stampery from 'stampery';
-import Promise from 'bluebird';
 import 'react-table/react-table.css';
-import { FormattedMessage } from 'react-intl';
-import messages from './messages';
 import awsExports from '../../aws-exports';
 Amplify.configure(awsExports);
-const stampery = new Stampery('abad3702-839f-4e60-a8a4-6456a27f0cad');
 Storage.configure({ level: 'private' });
+
+
 
 class DocumentList extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -85,26 +83,26 @@ class DocumentList extends React.Component { // eslint-disable-line react/prefer
     const { isLoading, error, files } = this.state;
 
     const columns = [{
-      Header: 'Name',
-      accessor: 'name',
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+      render: text => <a href="#">{text}</a>,
     }, {
-      Header: 'Stamped on',
-      accessor: 'stampedOn',
-      Cell: (props) => <span className="number">{props.value}</span>,
+      title: 'Stamped on',
+      dataIndex: 'stampedOn',
+      key: 'stampedOn',
     }, {
-      Header: 'Hash',
-      accessor: 'hash',
+      title: 'Hash',
+      dataIndex: 'hash',
+      key: 'hash',
     }, {
-      Header: 'Actions',
-      accessor: 'fileId',
-      Cell: (props) => (
+      title: 'Action',
+      key: 'action',
+      render: (file) => (
         <span>
-          <button onClick={() => this.deletePrivateDocument(props.value)}>
-            Delete
-          </button>
-          <button onClick={() => this.downloadPrivateDocument(props.value)}>
-            Download
-          </button>
+          <button onClick={() => this.downloadPrivateDocument(file.fileId)}>Download</button>
+          <Divider type="vertical" />
+          <button onClick={() => this.deletePrivateDocument(file.fileId)}>Delete</button>
         </span>
       ),
     }];
@@ -118,7 +116,8 @@ class DocumentList extends React.Component { // eslint-disable-line react/prefer
 
     return (
       <div>
-        <ReactTable className="-striped" data={files} columns={columns} />
+        <Table columns={columns} dataSource={files} />
+        {/* <ReactTable className="-striped" data={files} columns={columns} /> */}
       </div>
     );
   }

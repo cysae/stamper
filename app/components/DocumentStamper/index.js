@@ -99,9 +99,9 @@ class DocumentStamper extends React.Component { // eslint-disable-line react/pre
       return stampery.stamp(droppedFile.binaryHash);
     })
       .then((stamp) => {
-        droppedFile.stamperyid = stamp.id;
+        droppedFile.stamperyId = stamp.id;
         droppedFile.hash = stamp.hash;
-        droppedFile.stampedon = stamp.time;
+        droppedFile.stampedOn = stamp.time;
         return droppedFile;
       })
       .catch((err) => {
@@ -109,9 +109,10 @@ class DocumentStamper extends React.Component { // eslint-disable-line react/pre
           return stampery.getByHash(droppedFile.binaryHash)
             .then((stampList) => {
               const stamp = stampList[0];
-              droppedFile.stamperyid = stamp.id;
+              console.log(stamp);
+              droppedFile.stamperyId = stamp.id;
               droppedFile.hash = stamp.hash;
-              droppedFile.stampedon = stamp.time;
+              droppedFile.stampedOn = stamp.time;
               console.log(droppedFile);
               this.uploadFileToS3(droppedFile);
             })

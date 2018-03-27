@@ -17,18 +17,21 @@ import DocumentList from 'components/DocumentList/Loadable';
 import DocumentStamper from 'components/DocumentStamper/index';
 import DocumentVerifier from 'components/DocumentVerifier/index';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
-import BurgerMenu from 'components/BurgerMenu/index';
+import NormalLoginForm from 'containers/HomePage/index';
+import layoutHOC from 'components/Layout/index';
 
-export default function App() {
+function App() {
   return (
     <div>
-      <BurgerMenu />
       <Switch>
         <Route exact path="/" component={DocumentList} />
         <Route exact path="/stamp" component={DocumentStamper} />
         <Route exact path="/verify" component={DocumentVerifier} />
+        <Route exact path="/test" component={NormalLoginForm} />
         <Route component={NotFoundPage} />
       </Switch>
     </div>
   );
 }
+
+export default layoutHOC(App);
