@@ -3,6 +3,7 @@ import { injectGlobal } from 'styled-components';
 // Ant Design
 import 'antd/dist/antd.css';
 
+
 /* eslint no-unused-expressions: 0 */
 injectGlobal`
   html,
@@ -29,5 +30,9 @@ injectGlobal`
   label {
     font-family: Georgia, Times, 'Times New Roman', serif;
     line-height: 1.5em;
+  }
+
+  input[name="phone_number"] {
+    display: none !important;
   }
 `;

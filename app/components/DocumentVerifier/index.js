@@ -86,7 +86,7 @@ class VerifyDocument extends React.Component { // eslint-disable-line react/pref
         <Dropzone onDrop={this.onDrop} multiple={false} style={{ width: '100%', border: 'dashed', height: '70vh' }}>
           <div style={{ margin: '0', position: 'relative', top: '50%', transform: 'translate(0%, -50%)' }}>
             <p className="ant-upload-drag-icon">
-              <Icon type="inbox" style={{ fontSize: '100px' }}/>
+              <Icon type="inbox" style={{ fontSize: '100px' }} />
             </p>
             <p className="ant-upload-text" style={{ fontSize: '30px' }}>Haga clic o arrastre aquí para verificar un documento.</p>
           </div>

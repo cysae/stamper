@@ -12,30 +12,46 @@ import React from 'react';
  * the linting exception.
  */
 
-import { Switch, Route } from 'react-router-dom';
-import DocumentList from 'components/DocumentList/Loadable';
-import DocumentStamper from 'components/DocumentStamper/index';
-import DocumentVerifier from 'components/DocumentVerifier/index';
-import NotFoundPage from 'containers/NotFoundPage/Loadable';
-import NormalLoginForm from 'containers/HomePage/index';
-import layoutHOC from 'components/Layout/index';
-import Amplify from 'aws-amplify';
-import { withAuthenticator } from 'aws-amplify-react';
+import PropTypes from 'prop-types';
+import Router from 'components/Router/index';
+import Amplify, { I18n } from 'aws-amplify';
+import { ConfirmSignIn, ConfirmSignUp, ForgotPassword, SignIn, SignUp, VerifyContact, withAuthenticator } from 'aws-amplify-react';
 import awsExports from '../../aws-exports';
 Amplify.configure(awsExports);
+I18n.setLanguage('es');
 
-function App() {
-  return (
-    <div>
-      <Switch>
-        <Route exact path="/" component={DocumentList} />
-        <Route exact path="/stamp" component={DocumentStamper} />
-        <Route exact path="/verify" component={DocumentVerifier} />
-        <Route exact path="/test" component={NormalLoginForm} />
-        <Route component={NotFoundPage} />
-      </Switch>
-    </div>
-  );
+class MySignUp extends SignUp {
+  render() {
+    return (
+      <div>sign</div>
+    );
+  }
 }
 
-export default withAuthenticator(layoutHOC(App));
+class App extends React.Component {
+  render() {
+    const { authState } = this.props;
+    if (authState === 'signedIn') {
+      return (
+        <div>
+          <Router />
+        </div>
+      );
+    }
+    return null;
+  }
+}
+
+App.propTypes = {
+  authState: PropTypes.string,
+};
+
+export default withAuthenticator(App, false, [
+  <SignIn />,
+  <ConfirmSignIn />,
+  <VerifyContact />,
+  <SignUp />,
+  <ConfirmSignUp />,
+  <ForgotPassword />,
+]);
+
