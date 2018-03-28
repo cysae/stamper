@@ -8,7 +8,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Layout } from 'antd';
 import Navigation from '../Navigation/index';
-import LogoImg from '../../images/icon-180x180.png';
+import LogoImg from '../../images/logo.png';
 import CustomHeader from '../CustomHeader/index';
 const { Content, Footer, Sider } = Layout;
 

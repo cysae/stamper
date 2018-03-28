@@ -6,9 +6,11 @@ import React from 'react';
 */
 
 import styled from 'styled-components';
-import { Auth } from 'aws-amplify';
+import Amplify, { Auth } from 'aws-amplify';
 import { Layout, Button } from 'antd';
+import awsExports from '../../aws-exports';
 const { Header } = Layout;
+Amplify.configure(awsExports);
 
 const Right = styled.div`
   position: absolute;
@@ -49,8 +51,8 @@ class CustomHeader extends React.Component { // eslint-disable-line react/prefer
   signOut() {
     this.setState({ isLogoutLoading: true });
     Auth.signOut()
-      .then(() => this.setState({ isLogoutLoading: false }))
-      .catch((err) => console.error(err));
+      .then(() => location.reload())
+      .catch(() => location.reload());
   }
 
   render() {
@@ -61,7 +63,7 @@ class CustomHeader extends React.Component { // eslint-disable-line react/prefer
         <Right>
           <Greeting>Hola, {username}</Greeting>
           <Button type="primary" icon="poweroff" loading={this.isLogoutLoading} onClick={this.signOut}>
-            Sign Out
+            Desconectar
           </Button>
         </Right>
       </Header>

@@ -6,13 +6,11 @@ import React from 'react';
 */
 
 // import styled from 'styled-components';
+import { Icon, Modal, Spin } from 'antd';
 import Stampery from 'stampery';
 import axios from 'axios';
 import Amplify from 'aws-amplify';
-import { withAuthenticator } from 'aws-amplify-react';
 import Dropzone from 'react-dropzone';
-import { FormattedMessage } from 'react-intl';
-import messages from './messages';
 import awsExports from '../../aws-exports';
 Amplify.configure(awsExports);
 const stampery = new Stampery('abad3702-839f-4e60-a8a4-6456a27f0cad');
@@ -21,7 +19,6 @@ class VerifyDocument extends React.Component { // eslint-disable-line react/pref
   constructor(props) {
     super(props);
     this.state = {
-      isVerified: undefined,
       isLoading: false,
       hasError: false,
     };
@@ -35,10 +32,22 @@ class VerifyDocument extends React.Component { // eslint-disable-line react/pref
     this.getBufferFromBlobUrl(file.preview).then((buffer) => {
       const hash = stampery.hash(buffer);
       return this.verify(hash);
-    }).then((isVerified) => this.setState({
-      isVerified,
-      isLoading: false,
-    })).catch(() => this.setState({ hasError: true }));
+    }).then((isVerified) => {
+      if (isVerified) {
+        Modal.success({
+          title: 'El Documento es Original!',
+          content: 'Hemos encontrado el hash te tu documento en la Blockchain.',
+        });
+      } else {
+        Modal.error({
+          title: 'El Documento es Falso!',
+          content: 'Aun no hemos encontrado el hash te tu documento en la Blockchain. Si acabas de subir un fichero necesitamos hasta algunas ahora para anclar el hash en la blockchain.',
+        });
+      }
+      this.setState({
+        isLoading: false,
+      });
+    }).catch(() => this.setState({ hasError: true }));
   }
 
   getBufferFromBlobUrl(url) {
@@ -61,34 +70,27 @@ class VerifyDocument extends React.Component { // eslint-disable-line react/pref
     return stampery.getByHash(hash)
       .then((stampList) => {
         const stamp = stampList[0];
-        console.log(stamp);
         const isVerified = (stamp === undefined) ? false : stampery.prove(stamp.receipts);
         return isVerified;
       });
   }
 
   render() {
-    const { isLoading, hasError, isVerified } = this.state;
+    const { isLoading, hasError } = this.state;
 
-    if (isLoading) { return <div>Loading...</div>; }
+    if (isLoading) { return <Spin size="large" />; }
     if (hasError) { return <div>Error...</div>; }
-
-    if (isVerified !== undefined) {
-      if (isVerified) {
-        return <h1>Verified</h1>;
-      }
-      if (!isVerified) {
-        return <h1>Falsified</h1>;
-      }
-    }
 
     return (
       <div>
-        <Dropzone onDrop={this.onDrop} multiple={false}>
-          <FormattedMessage {...messages.header} />
+        <Dropzone onDrop={this.onDrop} multiple={false} style={{ width: '100%', border: 'dashed', height: '70vh' }}>
+          <div style={{ margin: '0', position: 'relative', top: '50%', transform: 'translate(0%, -50%)' }}>
+            <p className="ant-upload-drag-icon">
+              <Icon type="inbox" style={{ fontSize: '100px' }}/>
+            </p>
+            <p className="ant-upload-text" style={{ fontSize: '30px' }}>Haga clic o arrastre aquí para verificar un documento.</p>
+          </div>
         </Dropzone>
-        <button onClick={this.verify}>Verify</button>
-        <FormattedMessage {...messages.header} />
       </div>
     );
   }
@@ -98,4 +100,4 @@ VerifyDocument.propTypes = {
 
 };
 
-export default withAuthenticator(VerifyDocument);
+export default VerifyDocument;

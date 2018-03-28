@@ -6,16 +6,30 @@ import React from 'react';
 */
 
 // import styled from 'styled-components';
-import ReactTable from 'react-table';
-import { Table, Icon, Divider } from 'antd';
+import { Table, Divider, Button, Popconfirm, Spin } from 'antd';
 import Amplify, { Storage, API } from 'aws-amplify';
-import { withAuthenticator } from 'aws-amplify-react';
-import 'react-table/react-table.css';
+import moment from 'moment';
 import awsExports from '../../aws-exports';
 Amplify.configure(awsExports);
 Storage.configure({ level: 'private' });
 
+const truncate = (fullStr, strLen, separator) => {
+  if (fullStr.length <= strLen) return fullStr;
+  const xSeparator = separator || '...';
+  const sepLen = xSeparator.length;
+  const charsToShow = strLen - sepLen;
+  const frontChars = Math.ceil(charsToShow / 2);
+  const backChars = Math.floor(charsToShow / 2);
 
+  return fullStr.substr(0, frontChars) +
+    xSeparator +
+    fullStr.substr(fullStr.length - backChars);
+};
+
+const dateFormat = (date) => {
+  const dateMoment = moment(date);
+  return dateMoment.format('DD.MM.YYYY - HH:mm');
+};
 
 class DocumentList extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -75,7 +89,7 @@ class DocumentList extends React.Component { // eslint-disable-line react/prefer
 
   downloadPrivateDocument(fileId) {
     Storage.get(fileId)
-      .then((fileUrl) => window.location = fileUrl)
+      .then((fileUrl) => { window.location = fileUrl; })
       .catch((err) => console.log(err));
   }
 
@@ -83,26 +97,35 @@ class DocumentList extends React.Component { // eslint-disable-line react/prefer
     const { isLoading, error, files } = this.state;
 
     const columns = [{
-      title: 'Name',
-      dataIndex: 'name',
+      title: 'Nombre',
       key: 'name',
-      render: text => <a href="#">{text}</a>,
+      render: (file) => (
+        <button onClick={() => this.downloadPrivateDocument(file.fileId)} style={{ color: '#1890ff', textDecoration: 'underline' }}>
+          {truncate(file.name, 20)}
+        </button>
+      ),
+      sorter: (a, b) => a.name.localeCompare(b.name),
     }, {
-      title: 'Stamped on',
+      title: 'Estampado en',
       dataIndex: 'stampedOn',
       key: 'stampedOn',
+      render: (stampedOn) => <span>{dateFormat(stampedOn)}</span>,
+      sorter: (a, b) => moment(a.stampedOn).diff(moment(b.stampedOn)),
     }, {
       title: 'Hash',
       dataIndex: 'hash',
       key: 'hash',
+      render: (hash) => <span>{truncate(hash, 20)}</span>,
     }, {
-      title: 'Action',
+      title: 'Acción',
       key: 'action',
       render: (file) => (
         <span>
-          <button onClick={() => this.downloadPrivateDocument(file.fileId)}>Download</button>
+          <Button type="primary" icon="download" onClick={() => this.downloadPrivateDocument(file.fileId)}>Descargar</Button>
           <Divider type="vertical" />
-          <button onClick={() => this.deletePrivateDocument(file.fileId)}>Delete</button>
+          <Popconfirm title="Seguro que quieres borrar este fichero?" onConfirm={() => this.deletePrivateDocument(file.fileId)} okText="Si" cancelText="No">
+            <Button type="danger">Borrar</Button>
+          </Popconfirm>
         </span>
       ),
     }];
@@ -111,13 +134,12 @@ class DocumentList extends React.Component { // eslint-disable-line react/prefer
       return <div>Error</div>;
     }
     if (isLoading) {
-      return <div>Loading...</div>;
+      return <Spin size="large" />;
     }
 
     return (
       <div>
-        <Table columns={columns} dataSource={files} rowKey="fileId" />
-        {/* <ReactTable className="-striped" data={files} columns={columns} /> */}
+        <Table columns={columns} dataSource={files} pagination={false} rowKey="fileId" />
       </div>
     );
   }
@@ -126,4 +148,4 @@ class DocumentList extends React.Component { // eslint-disable-line react/prefer
 DocumentList.propTypes = {
 };
 
-export default withAuthenticator(DocumentList);
+export default DocumentList;

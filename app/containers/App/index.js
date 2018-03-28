@@ -19,6 +19,10 @@ import DocumentVerifier from 'components/DocumentVerifier/index';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import NormalLoginForm from 'containers/HomePage/index';
 import layoutHOC from 'components/Layout/index';
+import Amplify from 'aws-amplify';
+import { withAuthenticator } from 'aws-amplify-react';
+import awsExports from '../../aws-exports';
+Amplify.configure(awsExports);
 
 function App() {
   return (
@@ -34,4 +38,4 @@ function App() {
   );
 }
 
-export default layoutHOC(App);
+export default withAuthenticator(layoutHOC(App));

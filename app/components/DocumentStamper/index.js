@@ -5,17 +5,14 @@ import React from 'react';
 *
 */
 
-// import styled from 'styled-components';
-
-import { FormattedMessage } from 'react-intl';
+/* import styled from 'styled-components'; */
+import { Icon, message, Modal, Spin } from 'antd';
 import Promise from 'bluebird';
 import axios from 'axios';
 import Dropzone from 'react-dropzone';
 import { v4 as uuidv4 } from 'uuid';
 import Stampery from 'stampery';
 import Amplify, { Storage, API } from 'aws-amplify';
-import { withAuthenticator } from 'aws-amplify-react';
-import messages from './messages';
 import awsExports from '../../aws-exports';
 Amplify.configure(awsExports);
 Storage.configure({
@@ -46,13 +43,27 @@ class DocumentStamper extends React.Component { // eslint-disable-line react/pre
 
     Promise.all(promises)
       .then((droppedFiles) => {
+        const stampedDocumentList = droppedFiles.map((file) => <li key={file.fileId}>{file.name}</li>);
+        Modal.success({
+          title: 'Hemos sellado tu/s documento/s.',
+          content: (
+            <div>
+              <p>Hemos sellado:</p>
+              <ul>
+                {stampedDocumentList}
+              </ul>
+              <p>Tienes que tener en cuenta que todavia necesitamos algunas horas para anclar las documentos en la Blockchain.</p>
+            </div>
+          ),
+        });
         this.setState({
           isLoading: false,
           files: droppedFiles,
         });
       })
-      .catch((err) => {
-        this.setState({ hasError: true })
+      .catch(() => {
+        message.error('Algo ha ido mal.');
+        this.setState({ hasError: true });
       });
   }
 
@@ -109,11 +120,9 @@ class DocumentStamper extends React.Component { // eslint-disable-line react/pre
           return stampery.getByHash(droppedFile.binaryHash)
             .then((stampList) => {
               const stamp = stampList[0];
-              console.log(stamp);
               droppedFile.stamperyId = stamp.id;
               droppedFile.hash = stamp.hash;
               droppedFile.stampedOn = stamp.time;
-              console.log(droppedFile);
               this.uploadFileToS3(droppedFile);
             })
             .then(() => this.saveFileToDynamoDB(droppedFile))
@@ -130,21 +139,21 @@ class DocumentStamper extends React.Component { // eslint-disable-line react/pre
   }
 
   render() {
-    const { isLoading, hasError, files } = this.state;
+    const { isLoading, hasError } = this.state;
 
     if (hasError) { return <div>Error...</div>; }
-    if (isLoading) { return <div>isLoading...</div>; }
-
-    const stampedDocumentList = files.map((file) => <li key={file.fileId}>{file.name}</li>);
+    if (isLoading) { return <Spin size="large" />; }
 
     return (
       <div>
-        <Dropzone onDrop={this.onDrop}>
-          <FormattedMessage {...messages.header} />
+        <Dropzone onDrop={this.onDrop} style={{ width: '100%', border: 'dashed', height: '70vh' }}>
+          <div style={{ margin: '0', position: 'relative', top: '50%', transform: 'translate(0%, -50%)' }}>
+            <p className="ant-upload-drag-icon">
+              <Icon type="inbox" style={{ fontSize: '100px' }} />
+            </p>
+            <p className="ant-upload-text" style={{ fontSize: '30px' }}>Haga clic o arrastre aquí para sellar.</p>
+          </div>
         </Dropzone>
-        <ul>
-          {stampedDocumentList}
-        </ul>
       </div>
     );
   }
@@ -154,4 +163,4 @@ DocumentStamper.propTypes = {
 
 };
 
-export default withAuthenticator(DocumentStamper);
+export default DocumentStamper;
