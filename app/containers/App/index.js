@@ -20,14 +20,6 @@ import awsExports from '../../aws-exports';
 Amplify.configure(awsExports);
 I18n.setLanguage('es');
 
-class MySignUp extends SignUp {
-  render() {
-    return (
-      <div>sign</div>
-    );
-  }
-}
-
 class App extends React.Component {
   render() {
     const { authState } = this.props;

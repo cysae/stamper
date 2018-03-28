@@ -1,7 +1,5 @@
 import React from 'react';
-import home_phone from '../images/logoWriting.png';
-import screenshot5 from '../images/logoWriting.png';
-import sprint_core from '../images/authLogo.png';
+import sprintCore from '../images/authLogo.png';
 
 export const Container = {
     fontFamily: `-apple-system,
@@ -66,15 +64,15 @@ export const FormContainer = {
 };
 
 const beforeImg = (
-    <img
-        src={screenshot5}
-        style={{
-            width: '216px',
-            marginTop: '87px',
-            marginLeft: '79px',
-            height: '393px'
-        }}
-    />
+        <img
+    // src={screenshot5}
+    style={{
+        width: '216px',
+        marginTop: '87px',
+        marginLeft: '79px',
+        height: '393px'
+    }}
+        />
 );
 
 export const FormSection = {
@@ -121,7 +119,7 @@ export const SectionHeaderContent = {
     // backgroundSize: '405px 379px',
     // backgroundPosition: '0 0',
     marginBottom: '40px',
-    backgroundImage: 'url(' + sprint_core + ')'
+    backgroundImage: 'url(' + sprintCore + ')'
 };
 
 export const SectionFooter = {

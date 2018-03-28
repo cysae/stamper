@@ -9,7 +9,7 @@ features:
           sdk-generation-stage-name: Development
         paths:
           /files: !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/files-20180328173438.zip
+            codeFilename: uploads/files-20180328175253.zip
             description: 'Handler for calls to resource path : /files/{proxy+}'
             enableCORS: true
             environment: {}
@@ -22,7 +22,7 @@ features:
             timeout: '3'
             version: 5196yEj8XfYAeRL2f_DSklT4azthUO0u
           '/files/{proxy+}': !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/files-20180328173438.zip
+            codeFilename: uploads/files-20180328175253.zip
             description: 'Handler for calls to resource path : /files/{proxy+}'
             enableCORS: true
             environment: {}
