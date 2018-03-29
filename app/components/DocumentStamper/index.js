@@ -6,6 +6,7 @@ import React from 'react';
 */
 
 /* import styled from 'styled-components'; */
+import PropTypes from 'prop-types';
 import { Icon, message, Modal, Spin } from 'antd';
 import Promise from 'bluebird';
 import axios from 'axios';
@@ -39,7 +40,14 @@ class DocumentStamper extends React.Component { // eslint-disable-line react/pre
   onDrop(files) {
     this.setState({ isLoading: true });
 
-    const promises = files.map((file) => this.stampUploadAndSaveFile(file));
+    // if logged in save stamp doc AND save to S3/ DynamoDB
+    // if NOT logged in only stamp
+    let promises = [];
+    if (this.props.authState === 'signedIn') {
+      promises = files.map((file) => this.stampUploadAndSaveFile(file));
+    } else {
+      promises = files.map((file) => this.notSignedInStampFile(file));
+    }
 
     Promise.all(promises)
       .then((droppedFiles) => {
@@ -132,6 +140,15 @@ class DocumentStamper extends React.Component { // eslint-disable-line react/pre
       });
   }
 
+  notSignedInStampFile(file) {
+    const droppedFile = file;
+    return this.getBufferFromBlobUrl(file.preview).then((buffer) => {
+      droppedFile.binaryHash = stampery.hash(buffer);
+      return stampery.stamp(droppedFile.binaryHash);
+    })
+      .finally(() => droppedFile);
+  }
+
   uploadFileToS3(file) {
     return Storage.put(file.uuid, file, {
       contentDisposition: `attachment; filename=${file.name}`,
@@ -140,18 +157,28 @@ class DocumentStamper extends React.Component { // eslint-disable-line react/pre
 
   render() {
     const { isLoading, hasError } = this.state;
+    const { authState } = this.props;
 
     if (hasError) { return <div>Error...</div>; }
     if (isLoading) { return <Spin size="large" />; }
 
+    let dropboxStyle = { width: '100%', border: 'dashed', height: '70vh' };
+    let dropzoneIconStyle = { fontSize: '100px' };
+    let dropzoneDivStyle = { margin: '0', position: 'relative', top: '50%', transform: 'translate(0%, -50%)' };
+    if (authState !== 'signedIn') {
+      dropboxStyle = { width: '100%', border: 'dashed', height: '30vh', marginBottom: '20px' };
+      dropzoneIconStyle = { fontSize: '50px' };
+      dropzoneDivStyle = { paddingTop: '5%', textAlign: 'center' };
+    }
+
     return (
       <div>
-        <Dropzone onDrop={this.onDrop} style={{ width: '100%', border: 'dashed', height: '70vh' }}>
-          <div style={{ margin: '0', position: 'relative', top: '50%', transform: 'translate(0%, -50%)' }}>
+        <Dropzone onDrop={this.onDrop} style={dropboxStyle}>
+          <div style={dropzoneDivStyle}>
             <p className="ant-upload-drag-icon">
-              <Icon type="inbox" style={{ fontSize: '100px' }} />
+              <Icon type="inbox" style={dropzoneIconStyle} />
             </p>
-            <p className="ant-upload-text" style={{ fontSize: '30px' }}>Haga clic o arrastre aquí para sellar.</p>
+            <p className="ant-upload-text" style={{ fontSize: '22px' }}>Haga clic o arrastre aquí para sellar.</p>
           </div>
         </Dropzone>
       </div>
@@ -160,7 +187,7 @@ class DocumentStamper extends React.Component { // eslint-disable-line react/pre
 }
 
 DocumentStamper.propTypes = {
-
+  authState: PropTypes.string,
 };
 
 export default DocumentStamper;

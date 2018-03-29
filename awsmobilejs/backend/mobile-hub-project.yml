@@ -9,31 +9,31 @@ features:
           sdk-generation-stage-name: Development
         paths:
           /files: !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/files-20180328175253.zip
+            codeFilename: uploads/files-20180329155445.zip
             description: 'Handler for calls to resource path : /files/{proxy+}'
             enableCORS: true
             environment: {}
             handler: lambda.handler
-            hashcode: OQMhD4eUWI6nFZmxrf9uDKH52DQVhk/pvAvGwxOXtxk=
+            hashcode: bLxfvnngULFwL4G/KIpTMm5M/dxIhA7TrIQlAoNiIJs=
             memorySize: '128'
-            modified: '2018-03-28T15:35:06.236+0000'
+            modified: '2018-03-29T13:55:10.454+0000'
             name: files
             runtime: nodejs6.10
             timeout: '3'
-            version: 5196yEj8XfYAeRL2f_DSklT4azthUO0u
+            version: xqNAbwKqmRpRhsyjQDP1FmnHwuOW4yAF
           '/files/{proxy+}': !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/files-20180328175253.zip
+            codeFilename: uploads/files-20180329155445.zip
             description: 'Handler for calls to resource path : /files/{proxy+}'
             enableCORS: true
             environment: {}
             handler: lambda.handler
-            hashcode: OQMhD4eUWI6nFZmxrf9uDKH52DQVhk/pvAvGwxOXtxk=
+            hashcode: bLxfvnngULFwL4G/KIpTMm5M/dxIhA7TrIQlAoNiIJs=
             memorySize: '128'
-            modified: '2018-03-28T15:35:06.236+0000'
+            modified: '2018-03-29T13:55:10.454+0000'
             name: files
             runtime: nodejs6.10
             timeout: '3'
-            version: VxAvtn5nBXmfEn2bA23BUGJBUOmB3Xzn
+            version: 79f5HI5u8hHCBAhjeVmyYo3qObbKbATG
   content-delivery: !com.amazonaws.mobilehub.v0.ContentDelivery 
     attributes:
       enabled: true
@@ -64,7 +64,7 @@ features:
   sign-in: !com.amazonaws.mobilehub.v0.SignIn 
     attributes:
       enabled: true
-      optional-sign-in: false
+      optional-sign-in: true
     components:
       sign-in-user-pools: !com.amazonaws.mobilehub.v0.UserPoolsIdentityProvider 
         attributes:

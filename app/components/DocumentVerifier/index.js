@@ -6,6 +6,7 @@ import React from 'react';
 */
 
 // import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import { Icon, Modal, Spin } from 'antd';
 import Stampery from 'stampery';
 import axios from 'axios';
@@ -77,18 +78,28 @@ class VerifyDocument extends React.Component { // eslint-disable-line react/pref
 
   render() {
     const { isLoading, hasError } = this.state;
+    const { authState } = this.props;
 
     if (isLoading) { return <Spin size="large" />; }
     if (hasError) { return <div>Error...</div>; }
 
+    let dropzoneStyle = { width: '100%', border: 'dashed', height: '70vh' };
+    let dropzoneIconStyle = { fontSize: '100px' };
+    let dropzoneDivStyle = { margin: '0', position: 'relative', top: '50%', transform: 'translate(0%, -50%)' };
+    if (authState !== 'signedIn') {
+      dropzoneStyle = { width: '100%', border: 'dashed', height: '30vh' };
+      dropzoneIconStyle = { fontSize: '50px' };
+      dropzoneDivStyle = { paddingTop: '5%', textAlign: 'center' };
+    }
+
     return (
       <div>
-        <Dropzone onDrop={this.onDrop} multiple={false} style={{ width: '100%', border: 'dashed', height: '70vh' }}>
-          <div style={{ margin: '0', position: 'relative', top: '50%', transform: 'translate(0%, -50%)' }}>
+        <Dropzone onDrop={this.onDrop} multiple={false} style={dropzoneStyle}>
+          <div style={dropzoneDivStyle}>
             <p className="ant-upload-drag-icon">
-              <Icon type="inbox" style={{ fontSize: '100px' }} />
+              <Icon type="inbox" style={dropzoneIconStyle} />
             </p>
-            <p className="ant-upload-text" style={{ fontSize: '30px' }}>Haga clic o arrastre aquí para verificar un documento.</p>
+            <p className="ant-upload-text" style={{ fontSize: '22px' }}>Haga clic o arrastre aquí para verificar un documento.</p>
           </div>
         </Dropzone>
       </div>
@@ -97,7 +108,7 @@ class VerifyDocument extends React.Component { // eslint-disable-line react/pref
 }
 
 VerifyDocument.propTypes = {
-
+  authState: PropTypes.string,
 };
 
 export default VerifyDocument;

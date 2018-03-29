@@ -17,6 +17,8 @@ import Router from 'components/Router/index';
 import Amplify, { I18n } from 'aws-amplify';
 import { ConfirmSignIn, ConfirmSignUp, ForgotPassword, SignIn, SignUp, VerifyContact, withAuthenticator } from 'aws-amplify-react';
 import awsExports from '../../aws-exports';
+import DocumentStamper from 'components/DocumentStamper/index';
+import DocumentVerifier from 'components/DocumentVerifier/index';
 Amplify.configure(awsExports);
 I18n.setLanguage('es');
 
@@ -26,7 +28,7 @@ class App extends React.Component {
     if (authState === 'signedIn') {
       return (
         <div>
-          <Router />
+          <Router authState={this.props.authState} />
         </div>
       );
     }
@@ -38,6 +40,13 @@ App.propTypes = {
   authState: PropTypes.string,
 };
 
+const AlwaysOn = (props) => (
+  <div style={{ display: 'inline-block', width: '40%', verticalAlign: 'middle' }}>
+    <DocumentStamper {...props} />
+    <DocumentVerifier />
+  </div>
+);
+
 export default withAuthenticator(App, false, [
   <SignIn />,
   <ConfirmSignIn />,
@@ -45,5 +54,6 @@ export default withAuthenticator(App, false, [
   <SignUp />,
   <ConfirmSignUp />,
   <ForgotPassword />,
+  <AlwaysOn />,
 ]);
 
