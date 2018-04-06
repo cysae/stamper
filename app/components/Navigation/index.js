@@ -24,7 +24,7 @@ class Navigation extends React.PureComponent { // eslint-disable-line react/pref
         <Menu.Item key="/stamp">
           <Link to="/stamp">
             <Icon type="file-add" />
-            <span className="nav-text">Estampear</span>
+            <span className="nav-text">Estampar</span>
           </Link>
         </Menu.Item>
         <Menu.Item key="/verify">

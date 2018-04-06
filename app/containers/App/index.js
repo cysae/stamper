@@ -21,6 +21,15 @@ import { ConfirmSignIn, ConfirmSignUp, ForgotPassword, SignIn, SignUp, VerifyCon
 import awsExports from '../../aws-exports';
 Amplify.configure(awsExports);
 I18n.setLanguage('es');
+const dict = {
+  es: {
+    'Sign In': 'Acceder',
+    'Forgot Password': '¿Has olvidado tu contraseña?',
+    'Sign Up': 'Crea un usuario',
+    'Resend Code': 'Reenviar codigo'
+  },
+};
+I18n.putVocabularies(dict);
 
 class App extends React.Component {
   render() {
@@ -43,7 +52,7 @@ App.propTypes = {
 const AlwaysOn = (props) => (
   <div style={{ display: 'inline-block', width: '40%', verticalAlign: 'middle' }}>
     <DocumentStamper {...props} />
-    <DocumentVerifier />
+    <DocumentVwerifier />
   </div>
 );
 

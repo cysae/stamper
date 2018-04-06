@@ -36,13 +36,13 @@ class VerifyDocument extends React.Component { // eslint-disable-line react/pref
     }).then((isVerified) => {
       if (isVerified) {
         Modal.success({
-          title: 'El Documento es Original!',
-          content: 'Hemos encontrado el hash te tu documento en la Blockchain.',
+          title: 'El documento se encuentra en la Blockchain.',
+          content: 'Hemos encontrado el hash de tu documento en la Blockchain.',
         });
       } else {
         Modal.error({
-          title: 'El Documento es Falso!',
-          content: 'Aun no hemos encontrado el hash te tu documento en la Blockchain. Si acabas de subir un fichero necesitamos hasta algunas ahora para anclar el hash en la blockchain.',
+          title: 'El documento no se encuentra en la Blockchain.',
+          content: 'Tenga en cuenta que el proceso de sellado en la Blockchain no es inmediato, necesitaremos un plazo de tiempo para su estampación.'
         });
       }
       this.setState({
@@ -99,7 +99,9 @@ class VerifyDocument extends React.Component { // eslint-disable-line react/pref
             <p className="ant-upload-drag-icon">
               <Icon type="inbox" style={dropzoneIconStyle} />
             </p>
-            <p className="ant-upload-text" style={{ fontSize: '22px' }}>Haga clic o arrastre aquí para verificar un documento.</p>
+            <p className="ant-upload-text" style={{ fontSize: '22px', margin: 25 }}>
+              Haga clic aquí o arrastre para verificar si el documento se encuentra en Blockchain.
+            </p>
           </div>
         </Dropzone>
       </div>

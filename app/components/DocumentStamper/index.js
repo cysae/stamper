@@ -53,14 +53,13 @@ class DocumentStamper extends React.Component { // eslint-disable-line react/pre
       .then((droppedFiles) => {
         const stampedDocumentList = droppedFiles.map((file) => <li key={file.fileId}>{file.name}</li>);
         Modal.success({
-          title: 'Hemos sellado tu/s documento/s.',
+          title: 'Hemos sellado tu/s documento/s:',
           content: (
             <div>
-              <p>Hemos sellado:</p>
               <ul>
                 {stampedDocumentList}
               </ul>
-              <p>Tienes que tener en cuenta que todavia necesitamos algunas horas para anclar las documentos en la Blockchain.</p>
+              <p>El proceso de sellado en la Blockchain no es inmediato, necesitaremos un plazo de tiempo para su estampación.</p>
             </div>
           ),
         });
@@ -178,7 +177,9 @@ class DocumentStamper extends React.Component { // eslint-disable-line react/pre
             <p className="ant-upload-drag-icon">
               <Icon type="inbox" style={dropzoneIconStyle} />
             </p>
-            <p className="ant-upload-text" style={{ fontSize: '22px' }}>Haga clic o arrastre aquí para sellar.</p>
+            <p className="ant-upload-text" style={{ fontSize: 22, margin: 25 }}>
+              Haga clic aquí o arrastre para estampar un documento en Blockchain.
+            </p>
           </div>
         </Dropzone>
       </div>
