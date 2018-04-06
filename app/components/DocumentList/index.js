@@ -6,10 +6,11 @@ import React from 'react';
 */
 
 // import styled from 'styled-components';
-import { Table, Divider, Button, Popconfirm, Spin } from 'antd';
+import { Table, Divider, Button, Popconfirm, Spin, message } from 'antd';
 import Amplify, { Storage, API } from 'aws-amplify';
 import moment from 'moment';
 import awsExports from '../../aws-exports';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 Amplify.configure(awsExports);
 Storage.configure({ level: 'private' });
 
@@ -115,7 +116,17 @@ class DocumentList extends React.Component { // eslint-disable-line react/prefer
       title: 'Hash',
       dataIndex: 'hash',
       key: 'hash',
-      render: (hash) => <span>{truncate(hash, 20)}</span>,
+      render: (hash) => (
+        <span>
+          {truncate(hash, 20)} &nbsp;
+          <CopyToClipboard
+            text={hash}
+            onCopy={() => { message.success("Hash copiado al portapapeles."); }}
+          >
+            <Button type="primary" shape="circle" icon="copy" size="small" />
+          </CopyToClipboard>
+        </span>
+      ),
     }, {
       title: 'Acción',
       key: 'action',
