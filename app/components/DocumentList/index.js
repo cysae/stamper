@@ -9,8 +9,8 @@ import React from 'react';
 import { Table, Divider, Button, Popconfirm, Spin, message } from 'antd';
 import Amplify, { Storage, API } from 'aws-amplify';
 import moment from 'moment';
-import awsExports from '../../aws-exports';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import awsExports from '../../aws-exports';
 Amplify.configure(awsExports);
 Storage.configure({ level: 'private' });
 
