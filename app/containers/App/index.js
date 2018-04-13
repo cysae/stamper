@@ -26,7 +26,10 @@ const dict = {
     'Sign In': 'Acceder',
     'Forgot Password': '¿Has olvidado tu contraseña?',
     'Sign Up': 'Crea un usuario',
-    'Resend Code': 'Reenviar codigo'
+    'Resend Code': 'Reenviar codigo',
+    'Username cannot be empty': 'Nombre de usario no puede estar vacio',
+    'Password cannot be empty': 'test',
+    'User does not exist': 'El usuario no existe',
   },
 };
 I18n.putVocabularies(dict);
@@ -52,7 +55,7 @@ App.propTypes = {
 const AlwaysOn = (props) => (
   <div style={{ display: 'inline-block', width: '40%', verticalAlign: 'middle' }}>
     <DocumentStamper {...props} />
-    <DocumentVwerifier />
+    <DocumentVerifier />
   </div>
 );
 

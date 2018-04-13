@@ -7,14 +7,17 @@ import React from 'react';
 
 import styled from 'styled-components';
 import Amplify, { Auth } from 'aws-amplify';
-import { Layout, Button } from 'antd';
+import { Layout, Row, Col, Button, Input } from 'antd';
 import awsExports from '../../aws-exports';
 const { Header } = Layout;
+const Search = Input.Search;
 Amplify.configure(awsExports);
 
-const Right = styled.div`
-  position: absolute;
-  right: 16px;
+const HeaderRow = styled(Row)`
+  padding: 0 16px 0 16px;
+`;
+const RightCol = styled(Col)`
+  text-align: right;
 `;
 
 const Greeting = styled.p`
@@ -60,12 +63,21 @@ class CustomHeader extends React.Component { // eslint-disable-line react/prefer
 
     return (
       <Header style={{ background: '#fff', padding: 0 }}>
-        <Right>
-          <Greeting>Hola, {username}</Greeting>
-          <Button type="primary" icon="poweroff" loading={this.isLogoutLoading} onClick={this.signOut}>
-            Desconectar
-          </Button>
-        </Right>
+        <HeaderRow>
+          <Col span={12}>
+            <Search
+              placeholder="Buscar con tu hash aqui."
+              onSearch={(value) => console.log(value)}
+              enterButton
+            />
+          </Col>
+          <RightCol span={12}>
+            <Greeting>Hola, {username}</Greeting>
+            <Button type="primary" icon="poweroff" loading={this.isLogoutLoading} onClick={this.signOut}>
+              Desconectar
+            </Button>
+          </RightCol>
+        </HeaderRow>
       </Header>
     );
   }
