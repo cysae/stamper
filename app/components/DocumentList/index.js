@@ -14,7 +14,6 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import awsExports from '../../aws-exports';
 Amplify.configure(awsExports);
 Storage.configure({ level: 'private' });
-Moment.lang('es');
 
 const truncate = (fullStr, strLen, separator) => {
   if (fullStr.length <= strLen) return fullStr;

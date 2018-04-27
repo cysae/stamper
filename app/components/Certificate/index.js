@@ -18,9 +18,6 @@ const RightCol = styled(Col)`
   font-size: 16px;
 `;
 
-const json = {
-  name: 'test'
-}
 
 function displayReceipts(receipts) {
   const output = [];

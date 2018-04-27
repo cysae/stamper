@@ -76,4 +76,11 @@ injectGlobal`
     line-height: 70px;
     min-height: 0 !important;
   }
+
+  .ant-table-column-sorter span {
+    height: 8px;
+  }
+  .ant-table-column-sorter span i {
+    font-size: 20px !important;
+  }
 `;
