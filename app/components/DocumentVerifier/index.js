@@ -87,7 +87,7 @@ class VerifyDocument extends React.Component { // eslint-disable-line react/pref
     let dropzoneIconStyle = { fontSize: '100px' };
     let dropzoneDivStyle = { margin: '0', position: 'relative', top: '50%', transform: 'translate(0%, -50%)' };
     if (authState !== 'signedIn') {
-      dropzoneStyle = { width: '100%', border: 'dashed', height: '30vh' };
+      dropzoneStyle = { width: '100%', border: 'dashed', height: '25vh' };
       dropzoneIconStyle = { fontSize: '50px' };
       dropzoneDivStyle = { paddingTop: '5%', textAlign: 'center' };
     }

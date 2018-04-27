@@ -38,40 +38,46 @@ class DocumentStamper extends React.Component { // eslint-disable-line react/pre
   }
 
   onDrop(files) {
-    this.setState({ isLoading: true });
-
-    // if logged in save stamp doc AND save to S3/ DynamoDB
-    // if NOT logged in only stamp
-    let promises = [];
-    if (this.props.authState === 'signedIn') {
-      promises = files.map((file) => this.stampUploadAndSaveFile(file));
+    if (this.props.disabled) {
+      message.error('No hemos estampado tu documento. Tienes que acceptar la Política de Privacidad');
     } else {
-      promises = files.map((file) => this.notSignedInStampFile(file));
-    }
+      this.setState({ isLoading: true });
 
-    Promise.all(promises)
-      .then((droppedFiles) => {
-        const stampedDocumentList = droppedFiles.map((file) => <li key={file.fileId}>{file.name}</li>);
-        Modal.success({
-          title: 'Hemos sellado tu/s documento/s:',
-          content: (
-            <div>
-              <ul>
-                {stampedDocumentList}
-              </ul>
-              <p>El proceso de sellado en la Blockchain no es inmediato, necesitaremos un plazo de tiempo para su estampación.</p>
-            </div>
-          ),
+      // if logged in save stamp doc AND save to S3/ DynamoDB
+      // if NOT logged in only stamp
+      let promises = [];
+      if (this.props.authState === 'signedIn') {
+        promises = files.map((file) => this.stampUploadAndSaveFile(file));
+      } else {
+        promises = files.map((file) => this.notSignedInStampFile(file));
+      }
+
+      Promise.all(promises)
+        .then((droppedFiles) => {
+          console.log(droppedFiles);
+          const stampedDocumentList = droppedFiles.map((file) => <li key={file.fileId}>{file.name}</li>);
+          Modal.success({
+            title: 'Hemos sellado tu/s documento/s:',
+            content: (
+              <div>
+                <ul>
+                  {stampedDocumentList}
+                </ul>
+                <p>El proceso de sellado en la Blockchain no es inmediato, necesitaremos un plazo de tiempo para su estampación.</p>
+              </div>
+            ),
+          });
+          this.setState({
+            isLoading: false,
+            files: droppedFiles,
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+          message.error('Algo ha ido mal.');
+          this.setState({ hasError: true });
         });
-        this.setState({
-          isLoading: false,
-          files: droppedFiles,
-        });
-      })
-      .catch(() => {
-        message.error('Algo ha ido mal.');
-        this.setState({ hasError: true });
-      });
+    }
   }
 
   getBufferFromBlobUrl(url) {
@@ -143,9 +149,15 @@ class DocumentStamper extends React.Component { // eslint-disable-line react/pre
     const droppedFile = file;
     return this.getBufferFromBlobUrl(file.preview).then((buffer) => {
       droppedFile.binaryHash = stampery.hash(buffer);
-      return stampery.stamp(droppedFile.binaryHash);
-    })
-      .finally(() => droppedFile);
+      return stampery.stamp(droppedFile.binaryHash)
+        .then(() => droppedFile)
+        .catch((err) => {
+          if (err.statusCode === 409) {
+            return droppedFile;
+          }
+          throw err;
+        });
+    });
   }
 
   uploadFileToS3(file) {
@@ -165,7 +177,7 @@ class DocumentStamper extends React.Component { // eslint-disable-line react/pre
     let dropzoneIconStyle = { fontSize: '100px' };
     let dropzoneDivStyle = { margin: '0', position: 'relative', top: '50%', transform: 'translate(0%, -50%)' };
     if (authState !== 'signedIn') {
-      dropboxStyle = { width: '100%', border: 'dashed', height: '30vh', marginBottom: '20px' };
+      dropboxStyle = { width: '100%', border: 'dashed', height: '25vh', marginBottom: '20px' };
       dropzoneIconStyle = { fontSize: '50px' };
       dropzoneDivStyle = { paddingTop: '5%', textAlign: 'center' };
     }
@@ -189,6 +201,7 @@ class DocumentStamper extends React.Component { // eslint-disable-line react/pre
 
 DocumentStamper.propTypes = {
   authState: PropTypes.string,
+  disabled: PropTypes.bool,
 };
 
 export default DocumentStamper;

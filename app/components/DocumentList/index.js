@@ -8,11 +8,13 @@ import React from 'react';
 // import styled from 'styled-components';
 import { Table, Divider, Button, Popconfirm, Spin, message } from 'antd';
 import Amplify, { Storage, API } from 'aws-amplify';
-import moment from 'moment';
+import Moment from 'moment';
+import 'moment/src/locale/es';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import awsExports from '../../aws-exports';
 Amplify.configure(awsExports);
 Storage.configure({ level: 'private' });
+Moment.lang('es');
 
 const truncate = (fullStr, strLen, separator) => {
   if (fullStr.length <= strLen) return fullStr;
@@ -28,8 +30,7 @@ const truncate = (fullStr, strLen, separator) => {
 };
 
 const dateFormat = (date) => {
-  const dateMoment = moment(date);
-  return dateMoment.format('DD.MM.YYYY - HH:mm');
+  return Moment(date).utcOffset(+4).locale('es').format('DD.MM.YYYY - HH:mm');
 };
 
 class DocumentList extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -111,7 +112,7 @@ class DocumentList extends React.Component { // eslint-disable-line react/prefer
       dataIndex: 'stampedOn',
       key: 'stampedOn',
       render: (stampedOn) => <span>{dateFormat(stampedOn)}</span>,
-      sorter: (a, b) => moment(a.stampedOn).diff(moment(b.stampedOn)),
+      sorter: (a, b) => Moment(a.stampedOn).diff(Moment(b.stampedOn)),
     }, {
       title: 'Hash',
       dataIndex: 'hash',
