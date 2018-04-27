@@ -30,7 +30,7 @@ const truncate = (fullStr, strLen, separator) => {
 };
 
 const dateFormat = (date) => {
-  return Moment(date).utcOffset(+4).locale('es').format('DD.MM.YYYY - HH:mm');
+  return Moment(date).utcOffset('+04:00').locale('es').format('DD.MM.YYYY - HH:mm');
 };
 
 class DocumentList extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -103,7 +103,7 @@ class DocumentList extends React.Component { // eslint-disable-line react/prefer
       key: 'name',
       render: (file) => (
         <button onClick={() => this.downloadPrivateDocument(file.fileId)} style={{ color: '#1890ff', textDecoration: 'underline' }}>
-          {truncate(file.name, 20)}
+          {file.name}
         </button>
       ),
       sorter: (a, b) => a.name.localeCompare(b.name),

@@ -12,6 +12,7 @@ import Stampery from 'stampery';
 import axios from 'axios';
 import Amplify from 'aws-amplify';
 import Dropzone from 'react-dropzone';
+import Certificate from '../Certificate/index'
 import awsExports from '../../aws-exports';
 Amplify.configure(awsExports);
 const stampery = new Stampery('abad3702-839f-4e60-a8a4-6456a27f0cad');
@@ -33,16 +34,23 @@ class VerifyDocument extends React.Component { // eslint-disable-line react/pref
     this.getBufferFromBlobUrl(file.preview).then((buffer) => {
       const hash = stampery.hash(buffer);
       return this.verify(hash);
-    }).then((isVerified) => {
+    }).then(([isVerified, stampList]) => {
+      console.log(stampList);
       if (isVerified) {
         Modal.success({
           title: 'El documento se encuentra en la Blockchain.',
-          content: 'Hemos encontrado el hash de tu documento en la Blockchain.',
+          content: (
+            <div>
+              <p>Hemos encontrado el hash de tu documento en la Blockchain.</p>
+              <Certificate {...stampList} />
+            </div>
+          ),
+          width: '90%',
         });
       } else {
         Modal.error({
           title: 'El documento no se encuentra en la Blockchain.',
-          content: 'Tenga en cuenta que el proceso de sellado en la Blockchain no es inmediato, necesitaremos un plazo de tiempo para su estampación.'
+          content: 'Tenga en cuenta que el proceso de sellado en la Blockchain no es inmediato, necesitaremos un plazo de tiempo para su estampación.',
         });
       }
       this.setState({
@@ -72,7 +80,7 @@ class VerifyDocument extends React.Component { // eslint-disable-line react/pref
       .then((stampList) => {
         const stamp = stampList[0];
         const isVerified = (stamp === undefined) ? false : stampery.prove(stamp.receipts);
-        return isVerified;
+        return [isVerified, stampList[0]];
       });
   }
 
