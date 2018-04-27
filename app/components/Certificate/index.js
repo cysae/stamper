@@ -43,7 +43,7 @@ function displayReceipts(receipts) {
           Ethereum Dirección:
         </LeftCol>
         <RightCol span={20}>
-          <a href={`https://www.blocktrail.com/BTC/tx/${receipts.btc.anchors[0].sourceId}`}>
+          <a target="blank_" href={`https://www.blocktrail.com/BTC/tx/${receipts.btc.anchors[0].sourceId}`}>
             {receipts.btc.anchors[0].sourceId}
           </a>
         </RightCol>
@@ -70,7 +70,7 @@ function displayReceipts(receipts) {
           Ethereum Dirección:
         </LeftCol>
         <RightCol span={20}>
-          <a href={`https://etherscan.io/tx/${receipts.eth.anchors[0].sourceId}`}>
+          <a target="blank_" href={`https://etherscan.io/tx/${receipts.eth.anchors[0].sourceId}`}>
             {receipts.eth.anchors[0].sourceId}
           </a>
         </RightCol>
