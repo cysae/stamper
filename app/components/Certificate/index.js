@@ -37,7 +37,7 @@ function displayReceipts(receipts) {
       </StyledRow>
       <StyledRow justify="start">
         <LeftCol span={4}>
-          Ethereum Dirección:
+          Bitcoin Dirección:
         </LeftCol>
         <RightCol span={20}>
           <a target="blank_" href={`https://www.blocktrail.com/BTC/tx/${receipts.btc.anchors[0].sourceId}`}>
