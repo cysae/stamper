@@ -249,7 +249,7 @@ function Certificate(props) {
               <View style={styles.col}>
                 <Image
                   style={styles.image}
-                  src="http://localhost:3000/static/media/logo.f94dd768.png"
+                  src="https://stamper.cysae.com/static/media/logo.f94dd768.png"
                 />
               </View>
               <View style={styles.col}>
