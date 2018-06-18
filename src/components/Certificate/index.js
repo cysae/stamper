@@ -140,7 +140,6 @@ function getReceipts(receipts) {
   }
 
   if (typeof receipts.eth === 'object') {
-    console.log('eth')
     receipt = {
       blockchain: 'Ethereum',
       address: receipts.eth.anchors[0].sourceId,
@@ -249,7 +248,7 @@ function Certificate(props) {
               <View style={styles.col}>
                 <Image
                   style={styles.image}
-                  src="https://stamper.cysae.com/static/media/logo.f94dd768.png"
+                  src={`${window.location.origin}/static/media/logo.f94dd768.png`}
                 />
               </View>
               <View style={styles.col}>
