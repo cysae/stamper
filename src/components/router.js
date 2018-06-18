@@ -13,7 +13,6 @@ import DocumentList from '../components/DocumentList/index.js';
 import DocumentStamper from '../components/DocumentStamper/index';
 import DocumentVerifier from '../components/DocumentVerifier/index';
 import NotFoundPage from '../containers/NotFoundPage/Loadable';
-import Certificate from './Certificate/index.js'
 
 function Router(props) {
   return (
@@ -22,9 +21,6 @@ function Router(props) {
         <Route exact path="/" component={DocumentList} />
         <Route exact path="/stamp" render={() => <DocumentStamper authState={props.authState} />} />
         <Route exact path="/verify" render={() => <DocumentVerifier authState={props.authState} />} />
-        <Route exact path="/certificate" render={() =>
-          <Certificate receipts={{test: '1'}} />
-        } />
         <Route component={NotFoundPage} />
       </Switch>
     </div>
