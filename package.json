@@ -8,6 +8,8 @@
     "antd": "^3.6.2",
     "aws-amplify": "^0.4.4",
     "aws-amplify-react": "^0.1.50",
+    "babel-plugin-import": "^1.8.0",
+    "brfs": "^1.6.1",
     "history": "^4.7.2",
     "immutable": "^3.8.2",
     "moment": "^2.22.2",
@@ -28,12 +30,16 @@
     "redux-saga": "^0.16.0",
     "reselect": "^3.0.1",
     "stampery": "^6.1.0",
-    "styled-components": "^3.3.2"
+    "styled-components": "^3.3.2",
+    "transform-loader": "^0.2.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test --env=jsdom",
+    "eject": "react-app-rewired eject"
+  },
+  "devDependencies": {
+    "react-app-rewired": "^1.5.2"
   }
 }

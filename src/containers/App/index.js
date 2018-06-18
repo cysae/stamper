@@ -13,7 +13,7 @@ import React from 'react';
  */
 
 import PropTypes from 'prop-types';
-import Router from '../../components/Router/index';
+import Router from '../../components/router.js';
 import DocumentStamper from '../../components/DocumentStamper/index.js';
 import DocumentVerifier from '../../components/DocumentVerifier/index.js';
 import Amplify, { I18n } from 'aws-amplify';

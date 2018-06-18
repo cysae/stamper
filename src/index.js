@@ -1,4 +1,5 @@
 import React from 'react';
+import "regenerator-runtime/runtime";
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import LanguageProvider from './containers/LanguageProvider';
