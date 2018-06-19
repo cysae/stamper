@@ -303,7 +303,7 @@ class Certificate extends Component {
             {getReceipts(receipts)}
           </Document>
         </Wrapper>
-        <Button onClick={this.download}>Click</Button>
+        <Button style={{width: '100%'}} type="primary" onClick={this.download}>Descargar</Button>
       </Container>
     )
   }
