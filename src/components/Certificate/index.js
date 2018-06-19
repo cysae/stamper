@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Document } from '@react-pdf/dom'
 import { Page, Text, Image, Link, View, StyleSheet } from '@react-pdf/core';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Row, Col } from 'antd';
+import { Button, Row, Col } from 'antd';
 
 const Wrapper = styled.div`
   display: flex;
@@ -237,61 +237,76 @@ function getShortReceipt(props) {
 }
 
 
-function Certificate(props) {
-  const { time, hash, receipts } = props;
-  return (
-    <Container>
-      <Wrapper>
-        <Document>
-          <Page size="A4" wrap>
-            <View style={styles.row}>
-              <View style={styles.col}>
-                <Image
-                  style={styles.image}
-                  src={`${window.location.origin}/static/media/logo.f94dd768.png`}
-                />
-              </View>
-              <View style={styles.col}>
-                <Text>CYSAE Stamper</Text>
-              </View>
-            </View>
-            <View style={styles.centerRow}>
-              <View style={styles.col}>
-                <Text>Sello en blockchain</Text>
-              </View>
-            </View>
+class Certificate extends Component {
+  download(event) {
+    const blobUrl = document.getElementsByTagName("iframe")[0].src
 
-            <View style={styles.container}>
-              {/* Date */}
+    var file_path = blobUrl;
+    var a = document.createElement('A');
+    a.href = file_path;
+    a.download = file_path.substr(file_path.lastIndexOf('/') + 1);
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+  render() {
+    const { time, hash, receipts } = this.props;
+    return (
+      <Container>
+        <Wrapper>
+          <Document>
+            <Page size="A4" wrap>
               <View style={styles.row}>
                 <View style={styles.col}>
-                  <Text style={styles.s}>
-                    Estampado en: {time}
-                  </Text>
+                  <Image
+                    style={styles.image}
+                    src={`${window.location.origin}/static/media/logo.f94dd768.png`}
+                  />
+                </View>
+                <View style={styles.col}>
+                  <Text>CYSAE Stamper</Text>
+                </View>
+              </View>
+              <View style={styles.centerRow}>
+                <View style={styles.col}>
+                  <Text>Sello en blockchain</Text>
                 </View>
               </View>
 
-              {/* Hash */}
-              <View style={styles.row}>
-                <View style={styles.col}>
-                  <Text style={styles.s}>
-                    Hash: {hash}
-                  </Text>
+              <View style={styles.container}>
+                {/* Date */}
+                <View style={styles.row}>
+                  <View style={styles.col}>
+                    <Text style={styles.s}>
+                      Estampado en: {time}
+                    </Text>
+                  </View>
                 </View>
+
+                {/* Hash */}
+                <View style={styles.row}>
+                  <View style={styles.col}>
+                    <Text style={styles.s}>
+                      Hash: {hash}
+                    </Text>
+                  </View>
+                </View>
+
+                {/* get short receipt */}
+                {getShortReceipts(receipts)}
+
               </View>
 
-              {/* get short receipt */}
-              {getShortReceipts(receipts)}
-
-            </View>
-
-          </Page>
-          {/* Receipts */}
-          {getReceipts(receipts)}
-        </Document>
-      </Wrapper>
-    </Container>
-  );
+            </Page>
+            {/* Receipts */}
+            {getReceipts(receipts)}
+          </Document>
+        </Wrapper>
+        <Button onClick={this.download}>Click</Button>
+      </Container>
+    )
+  }
 }
 
 Certificate.propTypes = {
