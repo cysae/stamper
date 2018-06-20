@@ -1,10 +1,11 @@
 import React from 'react';
-import { Table, Divider, Button, Popconfirm, Spin, message, Tooltip } from 'antd';
+import { Table, Divider, Button, Popconfirm, Spin, message, Tooltip, Modal } from 'antd';
 import Amplify, { Storage, API } from 'aws-amplify';
 import Moment from 'moment';
 import 'moment/locale/es';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import awsExports from '../aws-exports';
+import { validate, displayValidationModal } from '../utils/validate.js'
 Amplify.configure(awsExports);
 Storage.configure({ level: 'private' });
 
@@ -87,6 +88,13 @@ class DocumentList extends React.Component { // eslint-disable-line react/prefer
       .catch((err) => console.log(err));
   }
 
+  displaySeal(hash) {
+    validate(hash).then(([isVerified, stampList]) => {
+      displayValidationModal(isVerified, stampList);
+    });
+  }
+
+
   render() {
     const { isLoading, error, files } = this.state;
 
@@ -125,8 +133,8 @@ class DocumentList extends React.Component { // eslint-disable-line react/prefer
       key: 'action',
       render: (file) => (
         <span>
-          <Tooltip title="Descargar sello">
-            <Button type="primary" icon="barcode" />
+          <Tooltip title="Ver Sello">
+            <Button type="primary" icon="barcode" onClick={() => this.displaySeal(file.hash)} />
           </Tooltip>
           <Divider type="vertical" />
           <Tooltip title="Descargar documento">
