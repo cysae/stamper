@@ -1,17 +1,10 @@
 import React from 'react';
-/**
-*
-* DocumentList
-*
-*/
-
-// import styled from 'styled-components';
-import { Table, Divider, Button, Popconfirm, Spin, message } from 'antd';
+import { Table, Divider, Button, Popconfirm, Spin, message, Tooltip } from 'antd';
 import Amplify, { Storage, API } from 'aws-amplify';
 import Moment from 'moment';
 import 'moment/locale/es';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import awsExports from '../../aws-exports';
+import awsExports from '../aws-exports';
 Amplify.configure(awsExports);
 Storage.configure({ level: 'private' });
 
@@ -132,10 +125,18 @@ class DocumentList extends React.Component { // eslint-disable-line react/prefer
       key: 'action',
       render: (file) => (
         <span>
-          <Button type="primary" icon="download" onClick={() => this.downloadPrivateDocument(file.fileId)}>Descargar</Button>
+          <Tooltip title="Descargar sello">
+            <Button type="primary" icon="barcode" />
+          </Tooltip>
+          <Divider type="vertical" />
+          <Tooltip title="Descargar documento">
+            <Button type="primary" icon="download" onClick={() => this.downloadPrivateDocument(file.fileId)} />
+          </Tooltip>
           <Divider type="vertical" />
           <Popconfirm title="Seguro que quieres borrar este fichero?" onConfirm={() => this.deletePrivateDocument(file.fileId)} okText="Si" cancelText="No">
-            <Button type="danger">Borrar</Button>
+            <Tooltip title="Descargar documento">
+              <Button type="danger" icon="delete" />
+            </Tooltip>
           </Popconfirm>
         </span>
       ),

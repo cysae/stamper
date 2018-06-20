@@ -1,15 +1,8 @@
 import React from 'react';
-/**
- *
- * Router
- *
- */
-
-// import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
 import layoutHOC from '../components/Layout/index';
-import DocumentList from '../components/DocumentList/index.js';
+import DocumentList from './documentList.js';
 import DocumentStamper from '../components/DocumentStamper/index';
 import DocumentVerifier from '../components/DocumentVerifier/index';
 import NotFoundPage from '../containers/NotFoundPage/Loadable';
