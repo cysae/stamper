@@ -20,7 +20,7 @@ const store = configureStore(initialState, history);
 ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
-      <App  theme={Instagram} />
+      <App theme={Instagram} />
     </ConnectedRouter>
   </Provider>,
   document.getElementById('root')

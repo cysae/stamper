@@ -47,6 +47,7 @@ class DocumentStamper extends React.Component { // eslint-disable-line react/pre
       // if NOT logged in only stamp
       let promises = [];
       if (this.props.authState === 'signedIn') {
+        console.log('save and stamp')
         promises = files.map((file) => this.stampUploadAndSaveFile(file));
       } else {
         promises = files.map((file) => this.notSignedInStampFile(file));
@@ -54,7 +55,6 @@ class DocumentStamper extends React.Component { // eslint-disable-line react/pre
 
       Promise.all(promises)
         .then((droppedFiles) => {
-          console.log(droppedFiles);
           const stampedDocumentList = droppedFiles.map((file) => <li key={file.fileId}>{file.name}</li>);
           Modal.success({
             title: 'Hemos sellado tu/s documento/s:',
@@ -162,7 +162,7 @@ class DocumentStamper extends React.Component { // eslint-disable-line react/pre
 
   uploadFileToS3(file) {
     return Storage.put(file.uuid, file, {
-      contentDisposition: `attachment; filename=${file.name}`,
+      contentDisposition: `attachment; filename=${encodeURI(file.name)}`,
     });
   }
 

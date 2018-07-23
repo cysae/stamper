@@ -137,12 +137,12 @@ class DocumentList extends React.Component { // eslint-disable-line react/prefer
             <Button type="primary" icon="barcode" onClick={() => this.displaySeal(file.hash)} />
           </Tooltip>
           <Divider type="vertical" />
-          <Tooltip title="Descargar documento">
+          <Tooltip title="Descargar Documento">
             <Button type="primary" icon="download" onClick={() => this.downloadPrivateDocument(file.fileId)} />
           </Tooltip>
           <Divider type="vertical" />
           <Popconfirm title="Seguro que quieres borrar este fichero?" onConfirm={() => this.deletePrivateDocument(file.fileId)} okText="Si" cancelText="No">
-            <Tooltip title="Descargar documento">
+            <Tooltip title="Borrar Documento">
               <Button type="danger" icon="delete" />
             </Tooltip>
           </Popconfirm>
