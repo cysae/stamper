@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components'
 import { Table, Divider, Button, Popconfirm, Spin, message, Tooltip } from 'antd';
 import Amplify, { Storage, API } from 'aws-amplify';
 import Moment from 'moment';
@@ -25,6 +26,11 @@ const truncate = (fullStr, strLen, separator) => {
 const dateFormat = (date) => {
   return Moment(date).utcOffset('+04:00').locale('es').format('DD.MM.YYYY - HH:mm');
 };
+
+const DocButton = styled(Button)`
+  text-decoration: none !important;
+  border: 0 !important;
+`
 
 class DocumentList extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -102,9 +108,9 @@ class DocumentList extends React.Component { // eslint-disable-line react/prefer
       title: 'Nombre',
       key: 'name',
       render: (file) => (
-        <button onClick={() => this.downloadPrivateDocument(file.fileId)} style={{ color: '#1890ff', textDecoration: 'underline' }}>
+        <DocButton onClick={() => this.downloadPrivateDocument(file.fileId)} style={{ color: '#1890ff', textDecoration: 'underline' }}>
           {file.name}
-        </button>
+        </DocButton>
       ),
       sorter: (a, b) => a.name.localeCompare(b.name),
     }, {
@@ -133,16 +139,16 @@ class DocumentList extends React.Component { // eslint-disable-line react/prefer
       key: 'action',
       render: (file) => (
         <span>
-          <Tooltip title="Ver Sello">
+          <Tooltip title="Ver Sello" placement="bottom">
             <Button type="primary" icon="barcode" onClick={() => this.displaySeal(file.hash)} />
           </Tooltip>
           <Divider type="vertical" />
-          <Tooltip title="Descargar Documento">
+          <Tooltip title="Descargar Documento" placement="bottom">
             <Button type="primary" icon="download" onClick={() => this.downloadPrivateDocument(file.fileId)} />
           </Tooltip>
           <Divider type="vertical" />
           <Popconfirm title="Seguro que quieres borrar este fichero?" onConfirm={() => this.deletePrivateDocument(file.fileId)} okText="Si" cancelText="No">
-            <Tooltip title="Borrar Documento">
+            <Tooltip title="Borrar Documento" placement="bottom">
               <Button type="danger" icon="delete" />
             </Tooltip>
           </Popconfirm>
