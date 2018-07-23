@@ -3,7 +3,7 @@ import { Document } from '@react-pdf/dom'
 import { Page, Text, Image, Link, View, StyleSheet } from '@react-pdf/core';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Button, Row, Col } from 'antd';
+import { Button } from 'antd';
 
 const Wrapper = styled.div`
   display: flex;
@@ -19,15 +19,15 @@ const Container = styled.div`
   padding: 10px;
   border-radius: 14px;
 `;
-const StyledRow = styled(Row)`
-  text-align: left;
-`;
-const LeftCol = styled(Col)`
-  font-size: 16px;
-`;
-const RightCol = styled(Col)`
-  font-size: 16px;
-`;
+/* const StyledRow = styled(Row)`
+ *   text-align: left;
+ * `;
+ * const LeftCol = styled(Col)`
+ *   font-size: 16px;
+ * `;
+ * const RightCol = styled(Col)`
+ *   font-size: 16px;
+ * `; */
 
 // Create styles
 const styles = StyleSheet.create({
@@ -66,65 +66,65 @@ const styles = StyleSheet.create({
 });
 
 
-function displayReceipts(receipts) {
-  const output = [];
-
-  if (typeof receipts.btc === 'object') {
-    output.push(
-      <div key="btc">
-        <StyledRow justify="start">
-          <LeftCol span={4}>
-            Bitcoin Receipt:
-          </LeftCol>
-          <RightCol span={20}>
-            <pre>
-              {JSON.stringify(receipts.btc, null, 4)}
-            </pre>
-          </RightCol>
-        </StyledRow>
-        <StyledRow justify="start">
-          <LeftCol span={4}>
-            Bitcoin Dirección:
-          </LeftCol>
-          <RightCol span={20}>
-            <a target="blank_" href={`https://www.blocktrail.com/BTC/tx/${receipts.btc.anchors[0].sourceId}`}>
-              {receipts.btc.anchors[0].sourceId}
-            </a>
-          </RightCol>
-        </StyledRow>
-      </div>
-    );
-  }
-
-  if (typeof receipts.eth === 'object') {
-    output.push(
-      <div key="eth">
-        <StyledRow justify="start">
-          <LeftCol span={4}>
-            Ethereum Recibo:
-          </LeftCol>
-          <RightCol span={20}>
-            <pre>
-              {JSON.stringify(receipts.eth, null, 4)}
-            </pre>
-          </RightCol>
-        </StyledRow>
-        <StyledRow justify="start">
-          <LeftCol span={4}>
-            Ethereum Dirección:
-          </LeftCol>
-          <RightCol span={20}>
-            <a target="blank_" href={`https://etherscan.io/tx/${receipts.eth.anchors[0].sourceId}`}>
-            {receipts.eth.anchors[0].sourceId}
-          </a>
-        </RightCol>
-      </StyledRow>
-      </div>
-    );
-  }
-
-  return output;
-}
+/* function displayReceipts(receipts) {
+ *   const output = [];
+ * 
+ *   if (typeof receipts.btc === 'object') {
+ *     output.push(
+ *       <div key="btc">
+ *         <StyledRow justify="start">
+ *           <LeftCol span={4}>
+ *             Bitcoin Receipt:
+ *           </LeftCol>
+ *           <RightCol span={20}>
+ *             <pre>
+ *               {JSON.stringify(receipts.btc, null, 4)}
+ *             </pre>
+ *           </RightCol>
+ *         </StyledRow>
+ *         <StyledRow justify="start">
+ *           <LeftCol span={4}>
+ *             Bitcoin Dirección:
+ *           </LeftCol>
+ *           <RightCol span={20}>
+ *             <a target="blank_" href={`https://www.blocktrail.com/BTC/tx/${receipts.btc.anchors[0].sourceId}`}>
+ *               {receipts.btc.anchors[0].sourceId}
+ *             </a>
+ *           </RightCol>
+ *         </StyledRow>
+ *       </div>
+ *     );
+ *   }
+ * 
+ *   if (typeof receipts.eth === 'object') {
+ *     output.push(
+ *       <div key="eth">
+ *         <StyledRow justify="start">
+ *           <LeftCol span={4}>
+ *             Ethereum Recibo:
+ *           </LeftCol>
+ *           <RightCol span={20}>
+ *             <pre>
+ *               {JSON.stringify(receipts.eth, null, 4)}
+ *             </pre>
+ *           </RightCol>
+ *         </StyledRow>
+ *         <StyledRow justify="start">
+ *           <LeftCol span={4}>
+ *             Ethereum Dirección:
+ *           </LeftCol>
+ *           <RightCol span={20}>
+ *             <a target="blank_" href={`https://etherscan.io/tx/${receipts.eth.anchors[0].sourceId}`}>
+ *             {receipts.eth.anchors[0].sourceId}
+ *           </a>
+ *         </RightCol>
+ *       </StyledRow>
+ *       </div>
+ *     );
+ *   }
+ * 
+ *   return output;
+ * } */
 
 function getReceipts(receipts) {
   const output = []

@@ -78,7 +78,7 @@ class AlwaysOn extends React.Component {
         <div style={{ textAlign: 'center' }}>
           <label style={{ fontSize: 16 }}>
             <input onClick={this.handleTermsClick} type="checkbox" style={{ marginRight: '10px' }}/>
-            <a target="_blank" href="https://cysae.a.docxpresso.com/documents/preview/45?timestamp=1520972633&uniqid=5aa83359543e5964824212&APIKEY=ab24f3256f37815b1a05b26308e61e2d098c43c9&options=e30,&track=1" >
+            <a target="_blank" rel="noopener noreferrer" href="https://cysae.a.docxpresso.com/documents/preview/45?timestamp=1520972633&uniqid=5aa83359543e5964824212&APIKEY=ab24f3256f37815b1a05b26308e61e2d098c43c9&options=e30,&track=1" >
               Acepto la Política de Privacidad
             </a>
           </label>
@@ -161,7 +161,7 @@ class CustomSignUp extends SignUp {
             <div className="amplify-form-row" style={{ margin: '0px 40px 6px', textAlign: 'left' }}>
               <label style={{ padding: '9px 0px 7px 8px' }}>
                 <input id="terms" onClick={this.handleTermsClick} type="checkbox" className="amplify-input" style={{ float: 'left', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif', background: 'rgb(250, 250, 250)', border: '1px solid rgb(239, 239, 239)', borderRadius: 3, fontSize: 14, lineHeight: '18px', boxSizing: 'border-box' }} />
-                <a target="_blank" href="https://cysae.a.docxpresso.com/documents/preview/45?timestamp=1520972633&uniqid=5aa83359543e5964824212&APIKEY=ab24f3256f37815b1a05b26308e61e2d098c43c9&options=e30,&track=1" >
+                <a target="_blank" rel="noopener noreferrer" href="https://cysae.a.docxpresso.com/documents/preview/45?timestamp=1520972633&uniqid=5aa83359543e5964824212&APIKEY=ab24f3256f37815b1a05b26308e61e2d098c43c9&options=e30,&track=1" >
                   Acepto la Política de Privacidad
                 </a>
               </label>

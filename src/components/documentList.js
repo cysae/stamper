@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Divider, Button, Popconfirm, Spin, message, Tooltip, Modal } from 'antd';
+import { Table, Divider, Button, Popconfirm, Spin, message, Tooltip } from 'antd';
 import Amplify, { Storage, API } from 'aws-amplify';
 import Moment from 'moment';
 import 'moment/locale/es';

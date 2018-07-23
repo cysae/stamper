@@ -1,4 +1,3 @@
-import React from 'react';
 import sprintCore from '../images/authLogo.png';
 
 export const Container = {
