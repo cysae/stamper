@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "axios": "^0.18.0",
+    "dotenv": "^6.0.0"
+  },
+  "scripts": {
+    "deploy": "sls deploy",
+    "local": "sls invoke local --function certificate",
+    "remove": "sls remove"
+  }
+}

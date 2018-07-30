@@ -10,31 +10,31 @@ features:
           sdk-generation-stage-name: Development
         paths:
           /files: !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/files-20180723214105.zip
+            codeFilename: uploads/files-20180726101211.zip
             description: 'Handler for calls to resource path : /files/{proxy+}'
             enableCORS: true
             environment: {}
             handler: lambda.handler
-            hashcode: T00x0Qt7TzPU/jWw7EgRpaeLSS2sVrXSZ2rG8mW3/38=
+            hashcode: trFAw9G/bnuPjZlXBnPiiWsLxUAqLNTXGal8IDjYnOA=
             memorySize: '128'
-            modified: '2018-07-23T19:42:47.750+0000'
+            modified: '2018-07-26T08:12:39.710+0000'
             name: files
             runtime: nodejs6.10
             timeout: '3'
-            version: kouQzJBuzqQmS5ZvUimQfrH4cNBOLCNA
+            version: hQL6f1ker4S2l_YOGPpdxYcA_NKscsOP
           '/files/{proxy+}': !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/files-20180723214105.zip
+            codeFilename: uploads/files-20180726101211.zip
             description: 'Handler for calls to resource path : /files/{proxy+}'
             enableCORS: true
             environment: {}
             handler: lambda.handler
-            hashcode: T00x0Qt7TzPU/jWw7EgRpaeLSS2sVrXSZ2rG8mW3/38=
+            hashcode: trFAw9G/bnuPjZlXBnPiiWsLxUAqLNTXGal8IDjYnOA=
             memorySize: '128'
-            modified: '2018-07-23T19:42:47.750+0000'
+            modified: '2018-07-26T08:12:39.710+0000'
             name: files
             runtime: nodejs6.10
             timeout: '3'
-            version: T_pNwsxm3fr.n9H4eK.UKuR1JIMdAap0
+            version: KVgM0aOQ8NVl4D4au0Bu3eDWOUrlS81M
   content-delivery: !com.amazonaws.mobilehub.v0.ContentDelivery 
     attributes:
       enabled: true
@@ -59,6 +59,9 @@ features:
             rangeKeyType: S
             tableName: ___DYNAMIC_PREFIX___-files
             tablePrivacy: private
+  mobile-analytics: !com.amazonaws.mobilehub.v0.Pinpoint 
+    components:
+      analytics: !com.amazonaws.mobilehub.v0.PinpointAnalytics {}
   sign-in: !com.amazonaws.mobilehub.v0.SignIn 
     attributes:
       enabled: true

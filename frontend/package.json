@@ -8,6 +8,7 @@
     "antd": "^3.6.2",
     "aws-amplify": "^0.4.4",
     "aws-amplify-react": "^0.1.50",
+    "axios": "^0.18.0",
     "babel-plugin-import": "^1.8.0",
     "brfs": "^1.6.1",
     "history": "^4.7.2",

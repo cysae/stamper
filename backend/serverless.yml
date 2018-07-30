@@ -1,0 +1,24 @@
+service: stamper
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  stage: dev
+  region: eu-west-1
+
+functions:
+  certificate:
+    handler: handler.certificate
+    events:
+      - http:
+          path: certificate.pdf
+          method: get
+
+resources:
+  Resources:
+    ApiGatewayRestApi:
+      Type: AWS::ApiGateway::RestApi
+      Properties:
+        Name: dev-stamper
+        BinaryMediaTypes:
+          - "application/pdf" # or whichever ones you need

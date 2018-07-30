@@ -6,7 +6,7 @@ import Moment from 'moment';
 import 'moment/locale/es';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import awsExports from '../aws-exports';
-import { validate, displayValidationModal } from '../utils/validate.js'
+import { validate } from '../utils/validate.js'
 Amplify.configure(awsExports);
 Storage.configure({ level: 'private' });
 
@@ -94,13 +94,6 @@ class DocumentList extends React.Component { // eslint-disable-line react/prefer
       .catch((err) => console.log(err));
   }
 
-  displaySeal(hash) {
-    validate(hash).then(([isVerified, stampList]) => {
-      displayValidationModal(isVerified, stampList);
-    });
-  }
-
-
   render() {
     const { isLoading, error, files } = this.state;
 
@@ -137,23 +130,25 @@ class DocumentList extends React.Component { // eslint-disable-line react/prefer
     }, {
       title: 'Acción',
       key: 'action',
-      render: (file) => (
-        <span>
-          <Tooltip title="Ver Sello" placement="bottom">
-            <Button type="primary" icon="barcode" onClick={() => this.displaySeal(file.hash)} />
-          </Tooltip>
-          <Divider type="vertical" />
-          <Tooltip title="Descargar Documento" placement="bottom">
-            <Button type="primary" icon="download" onClick={() => this.downloadPrivateDocument(file.fileId)} />
-          </Tooltip>
-          <Divider type="vertical" />
-          <Popconfirm title="Seguro que quieres borrar este fichero?" onConfirm={() => this.deletePrivateDocument(file.fileId)} okText="Si" cancelText="No">
-            <Tooltip title="Borrar Documento" placement="bottom">
-              <Button type="danger" icon="delete" />
+      render: (file) => {
+        return (
+          <span>
+            <Tooltip title="Ver Sello" placement="bottom">
+              <Button type="primary" icon="barcode" />
             </Tooltip>
-          </Popconfirm>
-        </span>
-      ),
+            <Divider type="vertical" />
+            <Tooltip title="Descargar Documento" placement="bottom">
+              <Button type="primary" icon="download" onClick={() => this.downloadPrivateDocument(file.fileId)} />
+            </Tooltip>
+            <Divider type="vertical" />
+            <Popconfirm title="Seguro que quieres borrar este fichero?" onConfirm={() => this.deletePrivateDocument(file.fileId)} okText="Si" cancelText="No">
+              <Tooltip title="Borrar Documento" placement="bottom">
+                <Button type="danger" icon="delete" />
+              </Tooltip>
+            </Popconfirm>
+          </span>
+        )
+      },
     }];
 
     if (error) {
