@@ -15,7 +15,7 @@ const stampery = axios.create({
 });
 
 module.exports.certificate = (event, context, callback) => {
-  // const stamperyId = event.queryStringParameters.id;
+  const stamperyId = event.queryStringParameters.id;
   const response = {
     statusCode: 200,
     headers: {
@@ -25,7 +25,7 @@ module.exports.certificate = (event, context, callback) => {
     isBase64Encoded: true
   };
 
-  stampery.get(`/stamps/5b2a612680e0190004bcccc8.pdf`, {
+  stampery.get(`/stamps/${stamperyId}.pdf`, {
     responseType: 'arraybuffer',
   })
     .then(res => {
