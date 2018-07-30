@@ -6,8 +6,8 @@ import Stampery from 'stampery';
 import axios from 'axios';
 import Amplify from 'aws-amplify';
 import Dropzone from 'react-dropzone';
-import awsExports from '../../aws-exports';
-import { validate, displayValidationModal } from '../../utils/validate.js'
+import awsExports from '../aws-exports';
+import { validate, displayValidationModal } from '../utils/validate.js'
 Amplify.configure(awsExports);
 const stampery = new Stampery('abad3702-839f-4e60-a8a4-6456a27f0cad');
 

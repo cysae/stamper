@@ -4,7 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 import layoutHOC from '../components/Layout/index';
 import DocumentList from './documentList.js';
 import DocumentStamper from '../components/DocumentStamper/index';
-import DocumentVerifier from '../components/DocumentVerifier/index';
+import Verifier from '../components/verifier'
 import NotFoundPage from '../containers/NotFoundPage/Loadable';
 
 function Router(props) {
@@ -13,7 +13,7 @@ function Router(props) {
       <Switch>
         <Route exact path="/" component={DocumentList} />
         <Route exact path="/stamp" render={() => <DocumentStamper authState={props.authState} />} />
-        <Route exact path="/verify" render={() => <DocumentVerifier authState={props.authState} />} />
+        <Route exact path="/verify" render={() => <Verifier authState={props.authState} />} />
         <Route component={NotFoundPage} />
       </Switch>
     </div>
