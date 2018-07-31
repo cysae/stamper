@@ -6,7 +6,6 @@ import axios from 'axios'
 
 const backend = axios.create({
   baseURL: 'https://nnvrqej24h.execute-api.eu-west-1.amazonaws.com/dev',
-  tiemout: 1000
 })
 
 const Container = styled.div`
@@ -44,12 +43,17 @@ class Certificate extends Component {
   }
 
   async setCertificateIframe(id) {
-    const blob = await backend.get('certificate.pdf', {
-      responseType: 'blob',
+    const res = await backend.get('certificate.pdf', {
+      responseType: 'arraybuffer',
+      headers: {
+        'Content-Type': 'application/pdf',
+        'Accept': 'application/pdf'
+      },
       params: { id }
     })
-    const url = window.URL.createObjectURL(blob)
-    document.getElementById("certificate").src = url
+    const buffer = Buffer.from(res.data)
+    const base64Str = buffer.toString('base64')
+    document.getElementById("certificate").data = `data:application/pdf;base64,${base64Str}`
   }
 
   render() {
@@ -59,7 +63,9 @@ class Certificate extends Component {
 
     return (
       <Container>
-        <iframe title="certificate" id="certificate"></iframe>
+        <object id="certificate" type="application/pdf">
+         Certificate.pdf
+        </object>
 
         <Button style={{width: '100%'}} type="primary" onClick={this.download}>Descargar</Button>
       </Container>
