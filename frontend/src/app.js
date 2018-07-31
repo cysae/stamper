@@ -1,25 +1,13 @@
 import React from 'react';
-/**
- *
- * App.js
- *
- * This component is the skeleton around the actual pages, and should only
- * contain code that should be seen on all pages. (e.g. navigation bar)
- *
- * NOTE: while this component should technically be a stateless functional
- * component (SFC), hot reloading does not currently support SFCs. If hot
- * reloading is not a necessity for you then you can refactor it and remove
- * the linting exception.
- */
 
 import PropTypes from 'prop-types';
-import Router from '../../components/router.js';
-import DocumentStamper from '../../components/DocumentStamper/index.js';
-import Verifier from '../../components/verifier';
+import Router from './components/router.js';
+import DocumentStamper from './components/DocumentStamper/index.js';
+import Verifier from './components/verifier';
 import Amplify, { I18n } from 'aws-amplify';
 import { ConfirmSignIn, ConfirmSignUp, ForgotPassword, SignIn, SignUp, VerifyContact, withAuthenticator } from 'aws-amplify-react';
 import { message } from 'antd';
-import awsExports from '../../aws-exports';
+import awsExports from './aws-exports';
 Amplify.configure(awsExports);
 I18n.setLanguage('es');
 const dict = {

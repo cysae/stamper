@@ -7,7 +7,7 @@ import createHistory from 'history/createBrowserHistory';
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 import configureStore from './configureStore';
-import App from './containers/App/index.js';
+import App from './app'
 import './global-styles';
 import Instagram from './utils/authenticatorTheme.js';
 import { Analytics } from 'aws-amplify'
