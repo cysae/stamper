@@ -13,6 +13,7 @@ functions:
       - http:
           path: certificate.pdf
           method: get
+          cors: true
 
 resources:
   Resources:

@@ -15,7 +15,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Router from '../../components/router.js';
 import DocumentStamper from '../../components/DocumentStamper/index.js';
-import DocumentVerifier from '../../components/DocumentVerifier/index.js';
+import Verifier from '../../components/verifier';
 import Amplify, { I18n } from 'aws-amplify';
 import { ConfirmSignIn, ConfirmSignUp, ForgotPassword, SignIn, SignUp, VerifyContact, withAuthenticator } from 'aws-amplify-react';
 import { message } from 'antd';
@@ -85,7 +85,7 @@ class AlwaysOn extends React.Component {
         </div>
 
         <DocumentStamper disabled={!this.state.acceptedTerms} {...this.props} />
-        <DocumentVerifier />
+        <Verifier />
       </div>
     );
   }

@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
-import { Document } from '@react-pdf/dom'
-import { Page, Text, Image, Link, View, StyleSheet } from '@react-pdf/core';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Button } from 'antd';
 import axios from 'axios'
 
 const backend = axios.create({
-  baseURL: 'https://zsua3vner4.execute-api.eu-west-1.amazonaws.com/dev',
+  baseURL: 'https://nnvrqej24h.execute-api.eu-west-1.amazonaws.com/dev',
   tiemout: 1000
 })
 
@@ -28,11 +26,8 @@ class Certificate extends Component {
   }
 
   componentDidMount() {
-    console.log('test')
-    backend.get(`/certificate?id=5b2a612680e0190004bcccc8`)
-      .then(res => console.log(res))
-      .catch(err => console.log(err))
-
+    const { id } = this.props
+    this.setCertificateIframe(id)
     this.setState({ isLoading: false })
   }
 
@@ -48,14 +43,24 @@ class Certificate extends Component {
     document.body.removeChild(a);
   }
 
+  async setCertificateIframe(id) {
+    const blob = await backend.get('certificate.pdf', {
+      responseType: 'blob',
+      params: { id }
+    })
+    const url = window.URL.createObjectURL(blob)
+    document.getElementById("certificate").src = url
+  }
+
   render() {
-    const { time, hash, receipts, id} = this.props;
-    const { isLoading, pdfBase64 } = this.state;
+    const { isLoading } = this.state;
 
     if(isLoading) return "Loading..."
 
     return (
       <Container>
+        <iframe title="certificate" id="certificate"></iframe>
+
         <Button style={{width: '100%'}} type="primary" onClick={this.download}>Descargar</Button>
       </Container>
     )
