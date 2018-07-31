@@ -14,6 +14,11 @@ const Container = styled.div`
   border-radius: 14px;
 `;
 
+const MyObject = styled.object`
+  width: 100%;
+  height: 50vh;
+`
+
 class Certificate extends Component {
   state = {
     data: null,
@@ -53,9 +58,9 @@ class Certificate extends Component {
 
     return (
       <Container>
-        <object id="certificate" type="application/pdf" data={data}>
+        <MyObject id="certificate" type="application/pdf" data={data}>
          Certificate.pdf
-        </object>
+        </MyObject>
 
         <a download="certificate.pdf" href={data} title="Download certificate">
           <Button style={{width: '100%'}} type="primary">Descargar</Button>
