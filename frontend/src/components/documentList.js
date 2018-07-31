@@ -6,7 +6,6 @@ import Moment from 'moment';
 import 'moment/locale/es';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import awsExports from '../aws-exports';
-import { validate } from '../utils/validate.js'
 import axios from 'axios'
 Amplify.configure(awsExports);
 Storage.configure({ level: 'private' });
@@ -155,7 +154,6 @@ class DocumentList extends React.Component { // eslint-disable-line react/prefer
       title: 'Acción',
       key: 'action',
       render: (file) => {
-        console.log(file)
         return (
           <span>
             <Tooltip title="Descargar Sello" placement="bottom">

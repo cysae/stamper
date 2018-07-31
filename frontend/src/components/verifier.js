@@ -1,13 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { Icon, Spin, Input} from 'antd';
+import { Icon, Spin, Input, Modal} from 'antd';
 import Stampery from 'stampery';
 import axios from 'axios';
 import Amplify from 'aws-amplify';
 import Dropzone from 'react-dropzone';
 import awsExports from '../aws-exports';
-import { validate, displayValidationModal } from '../utils/validate.js'
+import { validate } from '../utils/validate.js'
+import Certificate from '../components/certificate'
 Amplify.configure(awsExports);
 const stampery = new Stampery('abad3702-839f-4e60-a8a4-6456a27f0cad');
 
@@ -34,7 +35,7 @@ class VerifyDocument extends React.Component { // eslint-disable-line react/pref
       const hash = stampery.hash(buffer);
       return validate(hash);
     }).then(([isVerified, stampList]) => {
-      displayValidationModal(isVerified, stampList);
+      this.displayValidationModal(isVerified, stampList);
       this.setState({
         isLoading: false,
       });
@@ -59,12 +60,33 @@ class VerifyDocument extends React.Component { // eslint-disable-line react/pref
 
   verifyHash(hash) {
     validate(hash).then(([isVerified, stampList]) => {
-      displayValidationModal(isVerified, stampList);
+      this.displayValidationModal(isVerified, stampList);
       this.setState({
         isLoading: false,
       });
     });
   }
+
+  displayValidationModal = (isVerified, stampList) => {
+    if (isVerified) {
+      Modal.success({
+        title: 'El documento se encuentra en la Blockchain.',
+        content: (
+          <div>
+            <p>Hemos encontrado el hash de tu documento en la Blockchain.</p>
+            <Certificate {...stampList} />
+          </div>
+        ),
+        width: '90%',
+      });
+    } else {
+      Modal.error({
+        title: 'El documento no se encuentra en la Blockchain.',
+        content: 'Tenga en cuenta que el proceso de sellado en la Blockchain no es inmediato, necesitaremos un plazo de tiempo para su estampación.',
+      });
+    }
+  }
+
 
   render() {
     const { isLoading, hasError } = this.state;

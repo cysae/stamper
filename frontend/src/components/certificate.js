@@ -25,10 +25,6 @@ class Certificate extends Component {
     isLoading: true,
   }
 
-  constructor(props) {
-    super(props)
-  }
-
   componentDidMount() {
     const { id } = this.props
     this.setCertificate(id)
