@@ -16,33 +16,20 @@ const Container = styled.div`
 
 class Certificate extends Component {
   state = {
+    data: null,
     isLoading: true,
   }
 
   constructor(props) {
     super(props)
-    console.log('test')
   }
 
   componentDidMount() {
     const { id } = this.props
-    this.setCertificateIframe(id)
-    this.setState({ isLoading: false })
+    this.setCertificate(id)
   }
 
-  download(event) {
-    const blobUrl = document.getElementsByTagName("iframe")[0].src
-
-    var file_path = blobUrl;
-    var a = document.createElement('A');
-    a.href = file_path;
-    a.download = file_path.substr(file_path.lastIndexOf('/') + 1);
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  }
-
-  async setCertificateIframe(id) {
+  async setCertificate(id) {
     const res = await backend.get('certificate.pdf', {
       responseType: 'arraybuffer',
       headers: {
@@ -53,21 +40,26 @@ class Certificate extends Component {
     })
     const buffer = Buffer.from(res.data)
     const base64Str = buffer.toString('base64')
-    document.getElementById("certificate").data = `data:application/pdf;base64,${base64Str}`
+    this.setState({
+      data: `data:application/pdf;base64,${base64Str}`,
+      isLoading: false,
+    })
   }
 
   render() {
-    const { isLoading } = this.state;
+    const { isLoading, data } = this.state;
 
     if(isLoading) return "Loading..."
 
     return (
       <Container>
-        <object id="certificate" type="application/pdf">
+        <object id="certificate" type="application/pdf" data={data}>
          Certificate.pdf
         </object>
 
-        <Button style={{width: '100%'}} type="primary" onClick={this.download}>Descargar</Button>
+        <a download="certificate.pdf" href={data} title="Download certificate">
+          <Button style={{width: '100%'}} type="primary">Descargar</Button>
+        </a>
       </Container>
     )
   }
