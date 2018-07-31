@@ -20,7 +20,8 @@ module.exports.certificate = (event, context, callback) => {
     statusCode: 200,
     headers: {
       'Content-Type' : 'application/pdf',
-      'Content-Disposition': 'inline; filename="certificate.pdf"'
+      'Content-Disposition': 'inline; filename="certificate.pdf"',
+      'Access-Control-Allow-Origin': 'http://localhost:3000'
     },
     isBase64Encoded: true
   };
@@ -34,4 +35,5 @@ module.exports.certificate = (event, context, callback) => {
       response.body = base64Str
       callback(null, response);
     })
+    .catch(err => console.log(err))
 };

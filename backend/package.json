@@ -6,6 +6,7 @@
   "scripts": {
     "deploy": "sls deploy",
     "invoke": "sls invoke local --function certificate --path data.json",
+    "log": "sls logs -f certificate",
     "remove": "sls remove"
   }
 }
