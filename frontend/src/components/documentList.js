@@ -7,8 +7,13 @@ import 'moment/locale/es';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import awsExports from '../aws-exports';
 import { validate } from '../utils/validate.js'
+import axios from 'axios'
 Amplify.configure(awsExports);
 Storage.configure({ level: 'private' });
+
+const backend = axios.create({
+  baseURL: 'https://nnvrqej24h.execute-api.eu-west-1.amazonaws.com/dev',
+})
 
 const truncate = (fullStr, strLen, separator) => {
   if (fullStr.length <= strLen) return fullStr;
@@ -94,6 +99,25 @@ class DocumentList extends React.Component { // eslint-disable-line react/prefer
       .catch((err) => console.log(err));
   }
 
+  async downloadCertificate(id) {
+    const res = await backend.get('certificate.pdf', {
+      responseType: 'arraybuffer',
+      headers: {
+        'Content-Type': 'application/pdf',
+        'Accept': 'application/pdf'
+      },
+      params: { id }
+    })
+    const buffer = Buffer.from(res.data)
+    const base64Str = buffer.toString('base64')
+
+    const a = document.createElement('a');
+    document.body.appendChild(a);
+    a.download = 'certificate.pdf';
+    a.href = `data:application/pdf;base64,${base64Str}`;
+    a.click();
+  }
+
   render() {
     const { isLoading, error, files } = this.state;
 
@@ -131,10 +155,11 @@ class DocumentList extends React.Component { // eslint-disable-line react/prefer
       title: 'Acción',
       key: 'action',
       render: (file) => {
+        console.log(file)
         return (
           <span>
-            <Tooltip title="Ver Sello" placement="bottom">
-              <Button type="primary" icon="barcode" />
+            <Tooltip title="Descargar Sello" placement="bottom">
+              <Button onClick={() => this.downloadCertificate(file.stamperyId)} type="primary" icon="barcode" />
             </Tooltip>
             <Divider type="vertical" />
             <Tooltip title="Descargar Documento" placement="bottom">
