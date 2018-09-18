@@ -15,13 +15,15 @@ const stampery = axios.create({
 });
 
 module.exports.certificate = (event, context, callback) => {
+  const origin = event.headers.origin
+
   const stamperyId = event.queryStringParameters.id;
   const response = {
     statusCode: 200,
     headers: {
       'Content-Type' : 'application/pdf',
       'Content-Disposition': 'inline; filename="certificate.pdf"',
-      'Access-Control-Allow-Origin': 'http://localhost:3000'
+      'Access-Control-Allow-Origin': origin
     },
     isBase64Encoded: true
   };
